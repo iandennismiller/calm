@@ -8,15 +8,17 @@ Calm uses `llama-cpp-python`, which is itself a wrapper around `llama.cpp`.
 
 ## Quick Start
 
-Install the python package, download the default language model, and ask a question.
+1. install the python package
+2. download a language model
+3. ask a question
 
 ```bash
 pip install "git+https://github.com/iandennismiller/calm"
-calm download mistral-7b-openorca
+calm download
 calm ask "What is the meaning of life?"
 ```
 
-Optionally, install inside a virtual environment.
+Consider installing inside a python virtual environment.
 
 ## List available model releases
 
@@ -30,7 +32,7 @@ tiny-llama-1.1b-chat
 samantha-33b
 ```
 
-## Get a model
+## Download a model
 
 The following downloads a model called Samantha v1.1 33b to a folder called `~/.ai/models/llama`.
 
@@ -44,7 +46,8 @@ Downloading...
 
 ## Ask a question
 
-Ask a question on the command line:
+Ask a question on the command line.
+Be sure to put quotes around the question so it is treated as a single argument.
 
 ```bash
 calm ask "What is the meaning of life?"
@@ -53,6 +56,8 @@ calm ask "What is the meaning of life?"
 > AI Assistant: The meaning of life is a complex and multifaceted concept that has been pondered by philosophers, scientists, and individuals throughout history. There isn't a single definitive answer to this question, as it depends on one's personal beliefs, values, and experiences. However, some common themes in the search for meaning include finding purpose, happiness, and fulfillment through relationships, personal growth, and contributing positively to society.
 
 ## Consult a "mixture of experts"
+
+Using multi-turn prompting, simulate a Mixture of Experts and ask them a question.
 
 ```bash
 calm consult "How can we reduce traffic?"
