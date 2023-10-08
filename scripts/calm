@@ -1,8 +1,21 @@
 #!/usr/bin/env python3
 
+import click
+
 from calm import Calm
 
-if __name__ == "__main__":
+
+@click.group()
+def cli():
+    pass
+
+@cli.command()
+@click.argument('question', type=str)
+def ask(question):
+    "Ask a question"
     calm = Calm()
-    answer = calm.answer("What is the meaning of life?")
+    answer = calm.answer(question)
     print(answer)
+
+if __name__ == "__main__":
+    cli()
