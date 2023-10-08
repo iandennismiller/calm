@@ -25,6 +25,14 @@ wget https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF/resolve/main/mistr
 
 ## Use
 
+Ask a question on the command line:
+
 ```bash
 calm ask "What is the meaning of life?"
+```
+
+Run the OpenAI-compatible API on localhost:
+
+```bash
+calm api
 ```
