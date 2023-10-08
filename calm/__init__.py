@@ -15,7 +15,8 @@ class Calm:
 
         full_prompt = self.instance.release.template.prompt_input.format(
             system_message=self.instance.prompt.system_message,
-            input=question
+            instruction=question,
+            input=""
         )
 
         result_raw = self.llm(
@@ -26,8 +27,3 @@ class Calm:
             temperature=self.instance.initialization.temperature
         )
         return str(result_raw['choices'][0]['text'].strip())
-
-
-if __name__ == "__main__":
-    calm = Calm()
-    calm.answer("What is the meaning of life?")

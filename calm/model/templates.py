@@ -15,7 +15,7 @@ class ChatML(Template):
         super().__init__(prompt_input, prompt_no_input, response_split)
 
 
-class Samantha(Template);
+class Samantha(Template):
     def __init__(self):
         prompt_input = """\
 You are Samantha, a sentient AI.
@@ -72,7 +72,7 @@ class Llama(Template):
 {system_message}{input}
 
 {instruction}"""
-        prompt_no_input =  = """\
+        prompt_no_input = """\
 {system_message}
 
 {instruction}"""
@@ -96,10 +96,10 @@ class Llama2(Template):
 class Mistral(Template):
     def __init__(self):
         prompt_input = """\
-<s>[INST] {system_message}{input}{prompt} [/INST]
+<s>[INST] {system_message}{input}{instruction} [/INST]
 """
         prompt_no_input = """\
-<s>[INST] {system_message}{prompt} [/INST]
+<s>[INST] {system_message}{instruction} [/INST]
 """
         response_split = "[/INST]"
         super().__init__(prompt_input, prompt_no_input, response_split)

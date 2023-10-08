@@ -1,0 +1,14 @@
+/var/
+/tests/one.mk
+/**/.env
+/**/settings.mk
+/**/rpc.json
+/**/.cache/
+/**/.ipynb_checkpoints/
+/**/__pycache__/
+/**/dist/
+/**/build/
+/**/*.egg-info/
+/**/*_cache/
+/**/*_files/
+/**/*.pyc

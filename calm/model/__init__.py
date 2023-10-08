@@ -38,7 +38,7 @@ class Architecture:
     The architecture implies the context size, which is determined during training.
     """
     def __init__(self, kind, context_size):
-        self.kind = kind # llama, llama2, mistral...
+        self.kind = kind
         self.context_size = context_size
 
 class Release:

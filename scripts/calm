@@ -4,4 +4,5 @@ from calm import Calm
 
 if __name__ == "__main__":
     calm = Calm()
-    calm.answer("What is the meaning of life?")
+    answer = calm.answer("What is the meaning of life?")
+    print(answer)

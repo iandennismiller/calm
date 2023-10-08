@@ -8,7 +8,7 @@ setup(
         'calm',
     ],
     scripts=[
-        'scripts/calm.py'
+        'scripts/calm'
     ],
     include_package_data=True,
     keywords='',
