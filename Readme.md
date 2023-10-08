@@ -6,10 +6,14 @@ Calm supports Apple Silicon out of the box. Windows and Linux are coming.
 
 Calm uses `llama-cpp-python`, which is itself a wrapper around `llama.cpp`.
 
-## Install
+## Quick Start
+
+Install the python package, download the default language model, and ask a question.
 
 ```bash
 pip install "git+https://github.com/iandennismiller/calm"
+calm download mistral-7b-openorca
+calm ask "What is the meaning of life?"
 ```
 
 Optionally, install inside a virtual environment.
@@ -28,10 +32,10 @@ samantha-33b
 
 ## Get a model
 
-The following downloads a model called Mistral OpenOrca to a folder called `~/.ai/models/llama`.
+The following downloads a model called Samantha v1.1 33b to a folder called `~/.ai/models/llama`.
 
 ```bash
-calm download mistral-7b-openorca
+calm download samantha-33b
 ```
 
 ```bash
@@ -65,29 +69,7 @@ Name 3 world-class experts (past or present) who would be great at answering thi
 Don't answer the question yet.<|im_end|>
 
 <|im_start|>assistant
-I understand that you want me to provide information without directly answering the question. Here are 3 world-class experts and their respective fields, who could potentially offer valuable insights on reducing traffic:
-
-1. Janette Sadik-Khan - Transportation Planning (Former NYC Transportation Commissioner)
-2. Elon Musk - Technology & Innovation (Founder of Tesla and SpaceX)
-3. Enrique Peñalosa - Urban Design & Sustainability (Architect and Former Mayor of Bogotá, Colombia)
-
-These experts have extensive knowledge in their respective fields, which could contribute to finding solutions for reducing traffic congestion.<|im_end|>
-
-<|im_start|>user
-Great, now please answer the question as if these experts had collaborated in writing a joint anonymous answer.<|im_end|>
-
-<|im_start|>assistant
-If these experts were to collaborate anonymously on answering the question, their response might look like this:
-
-To reduce traffic, we can consider several approaches at different levels:
-
-1. Encourage the use of public transportation, carpooling, biking, and walking through infrastructure development, incentives, and education.
-2. Implement congestion pricing in urban centers to discourage driving during peak hours.
-3. Invest in technology and innovation for traffic management systems, real-time traffic monitoring, and improved public transportation.
-4. Promote urban planning that focuses on mixed-use developments, walkable neighborhoods, and efficient road designs.
-5. Integrate intermodal transportation hubs that connect different modes of transport seamlessly.
-
-By addressing these aspects, we can work towards reducing traffic congestion and improving overall mobility in our cities.<|im_end|>
+I understand that you want me to provide information without directly answering the question. Here are 3 world-class experts and their respective fields, who could potentially offer valuable insights on reducing traffic ...<|im_end|>
 ```
 
 ## Launch API server
