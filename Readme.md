@@ -19,8 +19,8 @@ Run the following in the shell to create the proper path and download the model 
 
 ```bash
 mkdir -p ~/.ai/models/llama/TheBloke/Mistral-7B-OpenOrca-GGUF
-wget -o ~/.ai/models/llama/TheBloke/Mistral-7B-OpenOrca-GGUF/mistral-7b-openorca.Q6_K.gguf \
-  https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF/resolve/main/mistral-7b-openorca.Q6_K.gguf  
+cd ~/.ai/models/llama/TheBloke/Mistral-7B-OpenOrca-GGUF
+wget https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF/resolve/main/mistral-7b-openorca.Q6_K.gguf  
 ```
 
 ## Use
