@@ -1,8 +1,10 @@
-# Calm: A peaceful user experience for Language Models
+# Calm: A peaceful user experience for Large Language Models
 
-Calm makes it easier to manage language models, prompts, parameters, and the rest.
+Calm makes it easier to manage large language models, templates, prompts, parameters, and the rest.
+
+Calm supports Apple Silicon out of the box. Windows and Linux are coming.
+
 Calm uses `llama-cpp-python`, which is itself a wrapper around `llama.cpp`.
-Calm supports Apple Silicon out of the box - but broader support is forthcoming.
 
 ## Install
 
