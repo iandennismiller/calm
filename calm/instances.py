@@ -1,5 +1,5 @@
-from . import Instance
-from .releases import Mistral_7b
+from .model import Instance
+from .releases import Mistral_7b, TinyLlama, Samantha_33b
 from .initializations import Factual
 from .prompts import Chat, Instruct
 

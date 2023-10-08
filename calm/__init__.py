@@ -3,7 +3,8 @@ import os
 import uvicorn
 from llama_cpp.server.app import create_app, Settings
 
-from .model.instances import Answerer, Assistant
+from .instances import Answerer, Assistant
+
 
 class Calm:
     def __init__(self, num_threads=1, gpu_layers=1):
@@ -46,3 +47,15 @@ class Calm:
             host=os.getenv("HOST", settings.host),
             port=int(os.getenv("PORT", settings.port)),
         )
+
+    def list_models(self):
+        def classesinmodule(module):
+            md = module.__dict__
+            return [
+                md[c] for c in md if (
+                    isinstance(md[c], type) and md[c].__module__ == module.__name__
+                )
+            ]
+
+        import calm.releases
+        return classesinmodule(calm.releases)

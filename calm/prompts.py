@@ -1,4 +1,4 @@
-from . import Prompt
+from .model import Prompt
 
 class Chat(Prompt):
     """

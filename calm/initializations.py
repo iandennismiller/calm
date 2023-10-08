@@ -1,4 +1,5 @@
-from . import Initialization
+from .model import Initialization
+
 
 class Factual(Initialization):
     def __init__(self):

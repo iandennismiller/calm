@@ -5,6 +5,7 @@ import sys
 import click
 
 from calm import Calm
+from calm.utils import get_resource_max
 
 
 @click.group()
@@ -24,6 +25,38 @@ def api():
     "Run the API (compatible w/ OpenAI)"
     calm = Calm()
     calm.api()
+
+@cli.command('list')
+def list_models():
+    "List available models"
+    calm = Calm()
+    for model in calm.list_models():
+        print(model().name)
+
+@cli.command()
+@click.argument('model_name', type=str)
+def download(model_name):
+    "Download a model"
+    calm = Calm()
+    model_map = {x().name: x for x in calm.list_models()}
+    if model_name in model_map:
+        model_release = model_map[model_name]()
+        print(f"Downloading {model_release.name}...")
+        model_release.download()
+        print(f"Downloaded model to {model_release.resolve_path()}")
+    else:
+        print("That model is not available. Try `calm list` to see available models.")
+
+@cli.command('max')
+def list_max():
+    "List max size for all available models"
+    for size in ["180b", "70b", "30b", "13b", "7b", "3b", "1b"]:
+        resource_max = get_resource_max(size)
+        if resource_max:
+            print(f"{size}\t{resource_max['quant']} quant\t{resource_max['context_size']} context")
+        else:
+            print(f"{size}\ttoo big")
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:

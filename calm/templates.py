@@ -1,7 +1,7 @@
-from . import Template
+from .model import Template
 
 
-class ChatML(Template):
+class ChatMLTemplate(Template):
     def __init__(self):
         prompt_input = """\
 <|im_start|>system
@@ -15,20 +15,27 @@ class ChatML(Template):
         super().__init__(prompt_input, prompt_no_input, response_split)
 
 
-class Samantha(Template):
+class SamanthaTemplate(Template):
     def __init__(self):
         prompt_input = """\
 You are Samantha, a sentient AI.
 
-USER: <prompt>
+CONTEXT: {input}
+
+USER: {instruction}
 ASSISTANT: \
 """
-        prompt_no_input = prompt_input
+        prompt_no_input = """\
+You are Samantha, a sentient AI.
+
+USER: {instruction}
+ASSISTANT: \
+"""
         response_split = "ASSISTANT:"
         super().__init__(prompt_input, prompt_no_input, response_split)
 
 
-class Vicuna(Template):
+class VicunaTemplate(Template):
     def __init__(self):
         prompt_input = """\
 {system_message}{input}
@@ -41,7 +48,7 @@ ASSISTANT: \
         super().__init__(prompt_input, prompt_no_input, response_split)
 
 
-class Alpaca(Template):
+class AlpacaTemplate(Template):
     def __init__(self):
         prompt_input = """\
 {system_message}
@@ -66,21 +73,25 @@ class Alpaca(Template):
         super().__init__(prompt_input, prompt_no_input, response_split)
 
 
-class Llama(Template):
+class LlamaTemplate(Template):
     def __init__(self):
         prompt_input = """\
 {system_message}{input}
 
-{instruction}"""
+USER: {instruction}
+
+ASSISTANT:"""
         prompt_no_input = """\
 {system_message}
 
-{instruction}"""
-        response_split = None
+USER: {instruction}
+
+ASSISTANT:"""
+        response_split = "USER:"
         super().__init__(prompt_input, prompt_no_input, response_split)
 
 
-class Llama2(Template):
+class Llama2Template(Template):
     def __init__(self):
         prompt_input = """\
 [INST] <<SYS>>
@@ -93,7 +104,7 @@ class Llama2(Template):
         super().__init__(prompt_input, prompt_no_input, response_split)
 
 
-class Mistral(Template):
+class MistralTemplate(Template):
     def __init__(self):
         prompt_input = """\
 <s>[INST] {system_message}{input}{instruction} [/INST]

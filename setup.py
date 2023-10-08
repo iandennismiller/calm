@@ -21,6 +21,8 @@ setup(
         "rich",
         "llama-cpp-python[server]",
         "chromadb",
+        "psutil",
+        "requests",
     ],
     extras_require={
         "dev": [
