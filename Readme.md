@@ -64,3 +64,23 @@ INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
 ```
+
+## Based on your RAM, which model sizes can you run?
+
+When I run this on my MBP M1 with 32gb ram, I get the following output:
+
+```bash
+calm max
+```
+
+```bash
+180b    too big
+70b     too big
+30b     Q4_K_S quant    2048 context
+13b     Q6_K quant      8192 context
+7b      Q6_K quant      8192 context
+3b      Q6_K quant      8192 context
+1b      Q6_K quant      8192 context
+```
+
+It is possible for your system to support a larger context than the model architecture provides.
