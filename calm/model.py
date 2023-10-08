@@ -95,8 +95,6 @@ class Release:
                 for chunk in r.iter_content(chunk_size=8192):
                     f.write(chunk)
 
-
-
 class KnowledgeBase:
     """
     Knowledge is represented as a vectore store.
@@ -124,9 +122,16 @@ class Instance:
             model_path = self.release.resolve_path()
             if not model_path:
                 raise Exception("Could not find model. Did you download it?")
+
+            resource_max = get_resource_max(self.release.parameters)
+            if resource_max["context_size"] < self.release.architecture.context_size:
+                context_size = resource_max["context_size"]
+            else:
+                context_size = self.release.architecture.context_size
+
             self.llm = LlamaCpp(
                 model_path=self.release.resolve_path(),
-                n_ctx=self.release.architecture.context_size,
+                n_ctx=context_size,
                 n_threads=self.num_threads,
                 n_gpu_layers=self.gpu_layers,
                 verbose=False,

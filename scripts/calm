@@ -57,6 +57,14 @@ def list_max():
         else:
             print(f"{size}\ttoo big")
 
+@cli.command()
+@click.argument('question', type=str)
+def consult(question):
+    "Consult with a council of experts"
+    calm = Calm()
+    answer = calm.consult(question)
+    print(answer)
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:

@@ -1,7 +1,7 @@
 from .model import Instance
 from .releases import Mistral_7b, TinyLlama, Samantha_33b
 from .initializations import Factual
-from .prompts import Chat, Instruct
+from .prompts import ChatPrompt, InstructPrompt, CouncilPrompt
 
 
 class Answerer(Instance):
@@ -12,7 +12,7 @@ class Answerer(Instance):
         super().__init__(
             release=Mistral_7b(),
             initialization=Factual(),
-            prompt=Chat()
+            prompt=ChatPrompt()
         )
 
 class Assistant(Instance):
@@ -23,5 +23,16 @@ class Assistant(Instance):
         super().__init__(
             release=Mistral_7b(),
             initialization=Factual(),
-            prompt=Instruct()
+            prompt=InstructPrompt()
+        )
+
+class Council(Instance):
+    """
+    A Council is an instance that can answer questions.
+    """
+    def __init__(self):
+        super().__init__(
+            release=Samantha_33b(),
+            initialization=Factual(),
+            prompt=CouncilPrompt()
         )

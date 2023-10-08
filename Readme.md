@@ -46,8 +46,48 @@ Ask a question on the command line:
 calm ask "What is the meaning of life?"
 ```
 
+> AI Assistant: The meaning of life is a complex and multifaceted concept that has been pondered by philosophers, scientists, and individuals throughout history. There isn't a single definitive answer to this question, as it depends on one's personal beliefs, values, and experiences. However, some common themes in the search for meaning include finding purpose, happiness, and fulfillment through relationships, personal growth, and contributing positively to society.
+
+## Consult a "mixture of experts"
+
 ```bash
-AI Assistant: The meaning of life is a complex and multifaceted concept that has been pondered by philosophers, scientists, and individuals throughout history. There isn't a single definitive answer to this question, as it depends on one's personal beliefs, values, and experiences. However, some common themes in the search for meaning include finding purpose, happiness, and fulfillment through relationships, personal growth, and contributing positively to society.
+calm consult "How can we reduce traffic?"
+```
+
+```chatml
+<|im_start|>system
+You are a helpful and terse assistant.<|im_end|>
+
+<|im_start|>user
+I want a response to the following question:
+How can we reduce traffic?
+Name 3 world-class experts (past or present) who would be great at answering this?
+Don't answer the question yet.<|im_end|>
+
+<|im_start|>assistant
+I understand that you want me to provide information without directly answering the question. Here are 3 world-class experts and their respective fields, who could potentially offer valuable insights on reducing traffic:
+
+1. Janette Sadik-Khan - Transportation Planning (Former NYC Transportation Commissioner)
+2. Elon Musk - Technology & Innovation (Founder of Tesla and SpaceX)
+3. Enrique Peñalosa - Urban Design & Sustainability (Architect and Former Mayor of Bogotá, Colombia)
+
+These experts have extensive knowledge in their respective fields, which could contribute to finding solutions for reducing traffic congestion.<|im_end|>
+
+<|im_start|>user
+Great, now please answer the question as if these experts had collaborated in writing a joint anonymous answer.<|im_end|>
+
+<|im_start|>assistant
+If these experts were to collaborate anonymously on answering the question, their response might look like this:
+
+To reduce traffic, we can consider several approaches at different levels:
+
+1. Encourage the use of public transportation, carpooling, biking, and walking through infrastructure development, incentives, and education.
+2. Implement congestion pricing in urban centers to discourage driving during peak hours.
+3. Invest in technology and innovation for traffic management systems, real-time traffic monitoring, and improved public transportation.
+4. Promote urban planning that focuses on mixed-use developments, walkable neighborhoods, and efficient road designs.
+5. Integrate intermodal transportation hubs that connect different modes of transport seamlessly.
+
+By addressing these aspects, we can work towards reducing traffic congestion and improving overall mobility in our cities.<|im_end|>
 ```
 
 ## Launch API server

@@ -23,6 +23,10 @@ setup(
         "chromadb",
         "psutil",
         "requests",
+        "llama-cpp-guidance",
+        "guidance",
+        "redis",
+        "redis-om",
     ],
     extras_require={
         "dev": [

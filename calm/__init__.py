@@ -3,7 +3,7 @@ import os
 import uvicorn
 from llama_cpp.server.app import create_app, Settings
 
-from .instances import Answerer, Assistant
+from .instances import Answerer, Assistant, Council
 
 
 class Calm:
@@ -59,3 +59,20 @@ class Calm:
 
         import calm.releases
         return classesinmodule(calm.releases)
+
+    def consult(self, question):
+        from llama_cpp_guidance.llm import LlamaCpp
+        import guidance
+
+        self.instance = Council()
+
+        guidance.llm = LlamaCpp(
+            model_path=self.instance.release.resolve_path(),
+            chat_mode=True,
+            n_gpu_layers=1,
+            n_threads=1
+        )
+
+        experts = guidance(self.instance.prompt.system_message)
+        result = experts(query=question)
+        print(result)
