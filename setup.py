@@ -19,7 +19,7 @@ setup(
         "python-dotenv",
         "click",
         "rich",
-        "llama-cpp-python",
+        "llama-cpp-python[server]",
         "chromadb",
     ],
     extras_require={

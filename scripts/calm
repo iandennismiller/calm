@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import sys
+
 import click
 
 from calm import Calm
@@ -17,5 +19,14 @@ def ask(question):
     answer = calm.answer(question)
     print(answer)
 
+@cli.command()
+def api():
+    "Run the API (compatible w/ OpenAI)"
+    calm = Calm()
+    calm.api()
+
 if __name__ == "__main__":
-    cli()
+    if len(sys.argv) == 1:
+        cli.main(['--help'])
+    else:
+        cli()

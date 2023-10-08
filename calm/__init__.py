@@ -1,5 +1,9 @@
-from .model.instances import Answerer, Assistant
+import os
 
+import uvicorn
+from llama_cpp.server.app import create_app, Settings
+
+from .model.instances import Answerer, Assistant
 
 class Calm:
     def __init__(self, num_threads=1, gpu_layers=1):
@@ -27,3 +31,18 @@ class Calm:
             temperature=self.instance.initialization.temperature
         )
         return str(result_raw['choices'][0]['text'].strip())
+
+    def api(self):
+        self.instance = Answerer()
+        settings = Settings(
+            n_ctx=self.instance.release.architecture.context_size,
+            n_threads=self.num_threads,
+            n_gpu_layers=self.gpu_layers,
+            model=self.instance.release.resolve_path()
+        )
+        app = create_app(settings=settings)
+        uvicorn.run(
+            app,
+            host=os.getenv("HOST", settings.host),
+            port=int(os.getenv("PORT", settings.port)),
+        )
