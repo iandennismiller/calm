@@ -1,6 +1,6 @@
 from .model import Instance
 from .releases import Mistral_7b, Mistral_7b_OpenOrca, TinyLlama_1b, Samantha_33b, MedText_13b
-from .initializations import Factual
+from .initializations import Factual, Creative
 from .prompts import ChatPrompt, InstructPrompt, CouncilPrompt
 
 
@@ -35,4 +35,15 @@ class Council(Instance):
             release=Samantha_33b(),
             initialization=Factual(),
             prompt=CouncilPrompt()
+        )
+
+class Companion(Instance):
+    """
+    A Companion is a chat buddy
+    """
+    def __init__(self):
+        super().__init__(
+            release=Mistral_7b(),
+            initialization=Creative(),
+            prompt=ChatPrompt()
         )
