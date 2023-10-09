@@ -134,9 +134,22 @@ A user actually interacts with an Instance of a model; everything else is simply
 
 ## Models used by calm
 
-- [mistral-v0.1-7b](https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF)
-- [samantha-1.1-llama-33b](https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF)
-- [TinyLlama-1.1B-Chat-v0.3](https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v0.3-GGUF)
+`calm` automatically chooses the most sensible model size based on your system resources.
+I've made opinionated choices in this regard and I believe the vast majority of use cases are supported by just three model sizes:
+
+- `f16`: unquantized, largest size, slowest computation, and best results
+- `Q6_k`: smaller and faster than unquantized, good results
+- `Q4_K_S`: smallest quant that still produces acceptable results
+
+Because this is a slightly atypical collection of sizes, I generally provide my own model repositories via Hugging Face.
+
+- [mistral-7b](https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF)
+- [mistral-7b-openorca](https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF)
+- [tinyllama-1.1b-chat](https://huggingface.co/iandennismiller/TinyLlama-1.1B-Chat-v0.3-GGUF)
+- [samantha-llama-33b](https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF)
+
+I would be remiss if I didn't mention the important contributions of [TheBloke](https://huggingface.co/TheBloke), who has provided great coverage of model quants.
+In some cases, I am directly re-hosting models they have quantized - but in most cases, I've performed my own conversions and quantizations to meet the specific goals of `calm`.
 
 ## Libraries used by calm
 

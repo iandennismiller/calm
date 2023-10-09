@@ -32,8 +32,8 @@ class TinyLlama(Release):
             parameters="1b",
             template=LlamaTemplate(),
             name="tiny-llama-1.1b-chat",
-            hugging_id="TheBloke/TinyLlama-1.1B-Chat-v0.3-GGUF",
-            hugging_url="https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v0.3-GGUF/resolve/main/tinyllama-1.1b-chat-v0.3.{quant}.gguf",
+            hugging_id="iandennismiller/TinyLlama-1.1B-Chat-v0.3-GGUF",
+            hugging_url="https://huggingface.co/iandennismiller/TinyLlama-1.1B-Chat-v0.3-GGUF/resolve/main/tinyllama-1.1b-chat-v0.3.{quant}.gguf",
         )
 
 class Samantha_33b(Release):
