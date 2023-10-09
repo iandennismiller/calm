@@ -1,5 +1,5 @@
 from .model import Release
-from .architectures import MistralArchitecture, LlamaArchitecture
+from .architectures import MistralArchitecture, LlamaArchitecture, Llama2Architecture
 from .templates import MistralTemplate, LlamaTemplate, SamanthaTemplate, OrcaTemplate, Llama2Template
 
 
