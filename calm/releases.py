@@ -11,7 +11,7 @@ class Mistral_7b(Release):
             template=MistralTemplate(),
             name="mistral-7b",
             hugging_id="iandennismiller/mistral-v0.1-7b-GGUF",
-            hugging_url="https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF/resolve/main/mistral-7b-v0.1.{quant}.gguf",
+            hugging_url="https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF/resolve/main/mistral-v0.1-7b-{quant}.gguf",
         )
 
 class Mistral_7b_OpenOrca(Release):
