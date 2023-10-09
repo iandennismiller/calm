@@ -1,10 +1,11 @@
 # Calm: A peaceful user experience for Large Language Models
 
-Calm makes it easier to manage large language models, templates, prompts, parameters, and the rest.
+Calm makes it easier to work with large language models.
 
-Calm supports Apple Silicon out of the box. Windows and Linux are coming.
+Calm automatically uses the right template for each model, supports multiple prompting styles, and chooses parameters based on your CPU, GPU and RAM.
 
-Calm uses `llama-cpp-python`, which is itself a wrapper around `llama.cpp`.
+Calm supports Apple Silicon out of the box.
+Windows and Linux are coming.
 
 ## Quick Start
 
@@ -18,8 +19,6 @@ calm download
 calm ask "What is the meaning of life?"
 ```
 
-Consider installing inside a python virtual environment.
-
 ## Usage
 
 ### List available model releases
@@ -29,6 +28,7 @@ calm list
 ```
 
 ```bash
+mistral-7b
 mistral-7b-openorca
 tiny-llama-1.1b-chat
 samantha-33b
@@ -37,6 +37,8 @@ samantha-33b
 ### Download a model
 
 The following downloads a model called Samantha v1.1 33b to a folder called `~/.ai/models/llama`.
+
+Calm will choose the right quant automatically by examining system RAM.
 
 ```bash
 calm download samantha-33b
@@ -49,13 +51,15 @@ Downloading...
 ### Ask a question
 
 Ask a question on the command line.
-Be sure to put quotes around the question so it is treated as a single argument.
+Calm will create a model Instance to answer the question.
 
 ```bash
 calm ask "What is the meaning of life?"
 ```
 
 > AI Assistant: The meaning of life is a complex and multifaceted concept that has been pondered by philosophers, scientists, and individuals throughout history. There isn't a single definitive answer to this question, as it depends on one's personal beliefs, values, and experiences. However, some common themes in the search for meaning include finding purpose, happiness, and fulfillment through relationships, personal growth, and contributing positively to society.
+
+Be sure to put quotes around the question so it is treated as a single argument.
 
 ### Consult a simulated Mixture of Experts
 
@@ -133,3 +137,13 @@ A user actually interacts with an Instance of a model; everything else is simply
 - [mistral-v0.1-7b](https://huggingface.co/iandennismiller/mistral-v0.1-7b)
 - [samantha-1.1-llama-33b](https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF)
 - [TinyLlama-1.1B-Chat-v0.3](https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v0.3-GGUF)
+
+## Libraries used by calm
+
+The following projects are used by `calm` to support large language models.
+
+- [llama.cpp](https://github.com/ggerganov/llama.cpp)
+- [llama-cpp-python](https://github.com/abetlen/llama-cpp-python)
+- [llama-cpp-guidance](https://github.com/nicholasyager/llama-cpp-guidance)
+- [guidance](https://github.com/guidance-ai/guidance)
+- [chromadb](https://github.com/chroma-core/chroma)
