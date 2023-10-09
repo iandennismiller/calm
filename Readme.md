@@ -123,12 +123,12 @@ It is possible for your system to support a larger context than the model archit
 Behind the scenes, `calm` specifies an ontology for describing how a large language model is used.
 The following classes can be extended to support new models, templates, and styles of prompting.
 
-- Instance: a specific combination of a model **Release** (which implies **Architecture** and **Template**), **Initialization**, and **Prompt**.
-- Release: a model of a specific **Architecture** that has been trained on a dataset.
-- Architecture: how the model is structured, including layers, connections, and activation functions.
-- Template: the structure of the input that a model was trained on.
-- Initialization: the values provided to the LLM engine.
-- Prompt:  provides the model with general instructions for how to handle input, context, and query to generate output.
+- **Instance**: a specific combination of a model **Release** (which implies **Architecture** and **Template**), **Initialization**, and **Prompt**.
+- **Release**: a model of a specific **Architecture** that has been trained on a dataset.
+- **Architecture**: how the model is structured, including layers, connections, and activation functions.
+- **Template**: the structure of the input that a model was trained on.
+- **Initialization**: the values provided to the LLM engine.
+- **Prompt**: provides the model with general instructions for how to handle input, context, and query to generate output.
 
 A user actually interacts with an Instance of a model; everything else is simply used to describe how that Instance operates.
 
