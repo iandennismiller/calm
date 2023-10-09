@@ -134,7 +134,7 @@ A user actually interacts with an Instance of a model; everything else is simply
 
 ## Models used by calm
 
-- [mistral-v0.1-7b](https://huggingface.co/iandennismiller/mistral-v0.1-7b)
+- [mistral-v0.1-7b](https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF)
 - [samantha-1.1-llama-33b](https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF)
 - [TinyLlama-1.1B-Chat-v0.3](https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v0.3-GGUF)
 
