@@ -53,7 +53,9 @@ def get_resource_max(num_parameters):
         elif ram == 4:
             return {"quant": "Q4_K_S", "context_size": 2048}
     elif num_parameters == "1b":
-        if ram >= 4:
+        if ram >= 8:
+            return {"quant": "f16", "context_size": 8192}
+        elif ram == 4:
             return {"quant": "Q6_K", "context_size": 8192}
         elif ram == 2:
             return {"quant": "Q4_K_S", "context_size": 2048}
