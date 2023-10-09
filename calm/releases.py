@@ -50,7 +50,7 @@ class Samantha_33b(Release):
 class MedText_13b(Release):
     def __init__(self):
         super().__init__(
-            architecture=LlamaArchitecture(),
+            architecture=Llama2Architecture(),
             parameters="13b",
             template=Llama2Template(),
             name="medtext-13b",

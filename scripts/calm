@@ -65,6 +65,16 @@ def consult(question):
     answer = calm.consult(question)
     print(answer)
 
+@cli.command()
+def chat():
+    "Chat with an LLM"
+    print("Not yet implemented")
+
+@cli.command()
+def update():
+    "Pull updated model data"
+    print("Not yet implemented")
+
 
 if __name__ == "__main__":
     if len(sys.argv) == 1:
