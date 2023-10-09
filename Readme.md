@@ -146,6 +146,7 @@ Because this is a slightly atypical collection of sizes, I generally provide my 
 - [mistral-7b](https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF)
 - [mistral-7b-openorca](https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF)
 - [tinyllama-1.1b-chat](https://huggingface.co/iandennismiller/TinyLlama-1.1B-Chat-v0.3-GGUF)
+- [medtext-13b](https://huggingface.co/iandennismiller/LLama-2-MedText-13b-GGUF)
 - [samantha-llama-33b](https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF)
 
 I would be remiss if I didn't mention the important contributions of [TheBloke](https://huggingface.co/TheBloke), who has provided great coverage of model quants.

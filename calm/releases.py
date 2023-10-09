@@ -1,6 +1,6 @@
 from .model import Release
 from .architectures import MistralArchitecture, LlamaArchitecture
-from .templates import MistralTemplate, LlamaTemplate, SamanthaTemplate, OrcaTemplate
+from .templates import MistralTemplate, LlamaTemplate, SamanthaTemplate, OrcaTemplate, Llama2Template
 
 
 class Mistral_7b(Release):
@@ -25,13 +25,13 @@ class Mistral_7b_OpenOrca(Release):
             hugging_url="https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF/resolve/main/mistral-7b-openorca.{quant}.gguf",
         )
 
-class TinyLlama(Release):
+class TinyLlama_1b(Release):
     def __init__(self):
         super().__init__(
             architecture=LlamaArchitecture(),
             parameters="1b",
             template=LlamaTemplate(),
-            name="tiny-llama-1.1b-chat",
+            name="tinyllama-1.1b-chat",
             hugging_id="iandennismiller/TinyLlama-1.1B-Chat-v0.3-GGUF",
             hugging_url="https://huggingface.co/iandennismiller/TinyLlama-1.1B-Chat-v0.3-GGUF/resolve/main/tinyllama-1.1b-chat-v0.3.{quant}.gguf",
         )
@@ -46,3 +46,15 @@ class Samantha_33b(Release):
             hugging_id="iandennismiller/samantha-1.1-llama-33b-GGUF",
             hugging_url="https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF/resolve/main/samantha-1.1-llama-33b.{quant}.gguf",
         )
+
+class MedText_13b(Release):
+    def __init__(self):
+        super().__init__(
+            architecture=LlamaArchitecture(),
+            parameters="13b",
+            template=Llama2Template(),
+            name="medtext-13b",
+            hugging_id="iandennismiller/LLama-2-MedText-13b-GGUF",
+            hugging_url="https://huggingface.co/iandennismiller/LLama-2-MedText-13b-GGUF/resolve/main/https://huggingface.co/iandennismiller/LLama-2-MedText-13b-GGUF/resolve/main/LLama-2-MedText-13b-{quant}.gguf",
+        )
+

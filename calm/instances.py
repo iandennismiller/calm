@@ -1,5 +1,5 @@
 from .model import Instance
-from .releases import Mistral_7b, Mistral_7b_OpenOrca, TinyLlama, Samantha_33b
+from .releases import Mistral_7b, Mistral_7b_OpenOrca, TinyLlama_1b, Samantha_33b, MedText_13b
 from .initializations import Factual
 from .prompts import ChatPrompt, InstructPrompt, CouncilPrompt
 
