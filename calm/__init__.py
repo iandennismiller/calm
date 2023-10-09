@@ -34,7 +34,7 @@ class Calm:
         return str(result_raw['choices'][0]['text'].strip())
 
     def api(self):
-        self.instance = Answerer()
+        self.instance = Council()
         settings = Settings(
             n_ctx=self.instance.release.architecture.context_size,
             n_threads=self.num_threads,
