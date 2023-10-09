@@ -4,19 +4,16 @@ import uvicorn
 from llama_cpp.server.app import create_app, Settings
 
 from .instances import Answerer, Assistant, Council
+from .utils import get_cores, has_metal
 
 
 class Calm:
-    def __init__(self, num_threads=1, gpu_layers=1):
-        self.num_threads = num_threads
-        self.gpu_layers = gpu_layers
+    def __init__(self):
+        pass
 
     def answer(self, question):
         self.instance = Answerer()
-        self.llm = self.instance.resolve_llm(
-            num_threads=self.num_threads,
-            gpu_layers=self.gpu_layers
-        )
+        self.llm = self.instance.resolve_llm()
 
         full_prompt = self.instance.release.template.prompt_input.format(
             system_message=self.instance.prompt.system_message,
@@ -37,8 +34,8 @@ class Calm:
         self.instance = Council()
         settings = Settings(
             n_ctx=self.instance.release.architecture.context_size,
-            n_threads=self.num_threads,
-            n_gpu_layers=self.gpu_layers,
+            n_threads=get_cores() - 1,
+            n_gpu_layers=1 if has_metal() else 0,
             model=self.instance.release.resolve_path()
         )
         app = create_app(settings=settings)
@@ -69,8 +66,8 @@ class Calm:
         guidance.llm = LlamaCpp(
             model_path=self.instance.release.resolve_path(),
             chat_mode=True,
-            n_gpu_layers=1,
-            n_threads=1
+            n_threads=get_cores() - 1,
+            n_gpu_layers=1 if has_metal() else 0,
         )
 
         experts = guidance(self.instance.prompt.system_message)

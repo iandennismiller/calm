@@ -34,7 +34,7 @@ def list_models():
         print(model().name)
 
 @cli.command()
-@click.argument('model_name', type=str, default="mistral-7b-openorca")
+@click.argument('model_name', type=str, default="mistral-7b")
 def download(model_name):
     "Download a model"
     calm = Calm()

@@ -1,6 +1,6 @@
 from .model import Release
 from .architectures import MistralArchitecture, LlamaArchitecture
-from .templates import MistralTemplate, LlamaTemplate, SamanthaTemplate
+from .templates import MistralTemplate, LlamaTemplate, SamanthaTemplate, OrcaTemplate
 
 
 class Mistral_7b(Release):
@@ -9,6 +9,17 @@ class Mistral_7b(Release):
             architecture=MistralArchitecture(),
             parameters="7b",
             template=MistralTemplate(),
+            name="mistral-7b",
+            hugging_id="iandennismiller/mistral-v0.1-7b",
+            hugging_url="https://huggingface.co/iandennismiller/mistral-v0.1-7b/resolve/main/mistral-7b-v0.1.{quant}.gguf",
+        )
+
+class Mistral_7b_OpenOrca(Release):
+    def __init__(self):
+        super().__init__(
+            architecture=MistralArchitecture(),
+            parameters="7b",
+            template=OrcaTemplate(),
             name="mistral-7b-openorca",
             hugging_id="TheBloke/Mistral-7B-OpenOrca-GGUF",
             hugging_url="https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF/resolve/main/mistral-7b-openorca.{quant}.gguf",

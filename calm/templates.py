@@ -107,6 +107,28 @@ class Llama2Template(Template):
 class MistralTemplate(Template):
     def __init__(self):
         prompt_input = """\
+SYSTEM: {system_message}
+
+INPUT: {input}
+
+USER: {instruction}
+
+ASSISTANT:\
+"""
+        prompt_no_input = """\
+SYSTEM: {system_message}
+
+USER: {instruction}
+
+ASSISTANT:\
+"""
+        response_split = "USER:"
+        super().__init__(prompt_input, prompt_no_input, response_split)
+
+
+class OrcaTemplate(Template):
+    def __init__(self):
+        prompt_input = """\
 <s>[INST] {system_message}{input}{instruction} [/INST]
 """
         prompt_no_input = """\

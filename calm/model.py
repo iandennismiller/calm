@@ -4,7 +4,7 @@ from glob import glob
 import requests
 from llama_cpp import Llama as LlamaCpp
 
-from .utils import get_resource_max
+from .utils import get_resource_max, has_metal, get_cores
 
 
 class Initialization:
@@ -114,10 +114,7 @@ class Instance:
         self.knowledgebase = knowledgebase
         self.llm = None
 
-    def resolve_llm(self, num_threads, gpu_layers):
-        self.num_threads = num_threads
-        self.gpu_layers = gpu_layers
-
+    def resolve_llm(self):
         if self.llm is None:
             model_path = self.release.resolve_path()
             if not model_path:
@@ -132,9 +129,10 @@ class Instance:
             self.llm = LlamaCpp(
                 model_path=self.release.resolve_path(),
                 n_ctx=context_size,
-                n_threads=self.num_threads,
-                n_gpu_layers=self.gpu_layers,
+                n_threads=get_cores() - 1,
+                n_gpu_layers=1 if has_metal() else 0,
                 verbose=False,
+                n_batch=1024,
                 seed=-1,
             )
         return self.llm

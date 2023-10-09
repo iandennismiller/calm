@@ -1,5 +1,5 @@
 from .model import Instance
-from .releases import Mistral_7b, TinyLlama, Samantha_33b
+from .releases import Mistral_7b, Mistral_7b_OpenOrca, TinyLlama, Samantha_33b
 from .initializations import Factual
 from .prompts import ChatPrompt, InstructPrompt, CouncilPrompt
 
@@ -21,7 +21,7 @@ class Assistant(Instance):
     """
     def __init__(self):
         super().__init__(
-            release=Mistral_7b(),
+            release=Mistral_7b_OpenOrca(),
             initialization=Factual(),
             prompt=InstructPrompt()
         )
