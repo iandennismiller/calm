@@ -5,3 +5,7 @@
 - [ ] chat command enters textmode chat with specified model
 - [ ] character cards in chat
 - [ ] pluggable knowledge bases w/ chromedb for RAG
+- [ ] use tags for model variants; (param size, quant) is variant
+- [ ] consider how ollama Modelfile is sortof like an instance
+- [ ] implement mapping from variant to URL
+

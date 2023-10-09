@@ -1,6 +1,6 @@
 # Calm: A peaceful user experience for Large Language Models
 
-Calm makes it easier to work with large language models.
+Calm is a python 3.9+ package that makes it easier to work with large language models.
 
 Calm automatically uses the right template for each model, supports multiple prompting styles, and chooses parameters based on your CPU, GPU and RAM.
 
@@ -17,6 +17,14 @@ Windows and Linux are coming.
 pip install "git+https://github.com/iandennismiller/calm"
 calm download
 calm ask "What is the meaning of life?"
+```
+
+### Optional: create a python virtual environment first
+
+```bash
+mkdir -p ~/.ai
+python3 -m venv ~/.ai/venv
+source ~/.ai/venv/bin/activate
 ```
 
 ## Usage
