@@ -3,9 +3,12 @@
 import sys
 
 import click
+from dotenv import load_dotenv
 
 from calm import Calm
 from calm.utils import get_resource_max
+from calm.llm import LLM
+from calm.character import Character
 
 
 @click.group()
@@ -13,11 +16,39 @@ def cli():
     pass
 
 @cli.command()
-@click.argument('question', type=str)
-def ask(question):
-    "Ask a question"
+@click.option('-m', '--model', type=str, required=False)
+@click.option('-c', '--character', type=str, required=False)
+@click.option('-q', '--quiet', is_flag=True, default=False)
+@click.argument('words', type=str)
+def say(words, model, character, quiet):
+    "Say some words to a model or character"
+    instance = None
+    loaded_character = None
+
     calm = Calm()
-    answer = calm.answer(question)
+
+    if character:
+        loaded_character = Character.from_config(name=character)
+        if model is None:
+            model = loaded_character.model
+    
+    # if the model is still none, default to Mistral
+    if model is None:
+        model = "mistral"
+
+    instance = LLM.from_config(name=model)
+
+    if loaded_character:
+        instance.character = loaded_character
+    elif instance.character is not None:
+        instance.character = Character.from_config(name=instance.character)
+    else:
+        instance.character = Character.from_config(name="chatter-gpt")
+
+    if not quiet:
+        print(f"Loaded {instance}, {instance.character}")
+    
+    answer = calm.answer(instance, words)
     print(answer)
 
 @cli.command()
@@ -31,19 +62,19 @@ def list_models():
     "List available model releases"
     calm = Calm()
     for model in calm.list_models():
-        print(model().name)
+        print(model)
 
 @cli.command()
-@click.argument('model_name', type=str, default="mistral-7b")
+@click.argument('model_name', type=str, default="mistral")
 def download(model_name):
     "Download a model"
     calm = Calm()
-    model_map = {x().name: x for x in calm.list_models()}
-    if model_name in model_map:
-        model_release = model_map[model_name]()
-        print(f"Downloading {model_release.name}...")
-        model_release.download()
-        print(f"Downloaded model to {model_release.resolve_path()}")
+    models = calm.list_models()
+    if model_name in models:
+        instance = LLM.from_config(name=model_name)
+        print(f"Downloading {instance}...")
+        instance.download()
+        print(f"Downloaded model to {instance.resolve_path()}")
     else:
         print("That model is not available. Try `calm list` to see available models.")
 
@@ -53,17 +84,9 @@ def list_max():
     for size in ["180b", "70b", "30b", "13b", "7b", "3b", "1b"]:
         resource_max = get_resource_max(size)
         if resource_max:
-            print(f"{size}\t{resource_max['quant']} quant\t{resource_max['context_size']} context")
+            print(f"{size}\t{resource_max['quant']} quant\t{resource_max['input_size']} context")
         else:
             print(f"{size}\ttoo big")
-
-@cli.command()
-@click.argument('question', type=str)
-def consult(question):
-    "Consult a simulated Mixture of Experts"
-    calm = Calm()
-    answer = calm.consult(question)
-    print(answer)
 
 @cli.command()
 def chat():
@@ -77,6 +100,7 @@ def update():
 
 
 if __name__ == "__main__":
+    load_dotenv()
     if len(sys.argv) == 1:
         cli.main(['--help'])
     else:

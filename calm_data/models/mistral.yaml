@@ -1,0 +1,28 @@
+name: Mistral
+creator: Mistral.ai
+about: |
+  Mistral-7B-v0.1 is a small, yet powerful model adaptable to many use-cases. Mistral 7B is better than Llama 2 13B on all benchmarks, has natural coding abilities, and 8k sequence length. It's released under Apache 2.0 licence.
+input_size: 8192
+source:
+  7b:
+    f16: https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF/resolve/main/mistral-v0.1-7b-f16.gguf
+    q8_0: https://huggingface.co/TheBloke/Mistral-7B-v0.1-GGUF/resolve/main/mistral-7b-v0.1.Q8_0.gguf
+    q6_k: https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF/resolve/main/mistral-v0.1-7b-Q6_K.gguf
+    q4_k_s: https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF/resolve/main/mistral-v0.1-7b-Q4_K_S.gguf
+template:
+  default: |
+    SYSTEM: {system_prompt}
+
+    INPUT: {input}
+
+    USER: {prompt}
+
+    ASSISTANT:
+  no_input: |
+    SYSTEM: {system_prompt}
+
+    USER: {prompt}
+
+    ASSISTANT:
+  stop: "USER:"
+character: chatter-gpt

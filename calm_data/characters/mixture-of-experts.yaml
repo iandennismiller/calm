@@ -1,0 +1,27 @@
+name: Mixture of Experts
+system_prompt: |
+  {{#system~}}
+  You are a helpful and terse assistant.
+  {{~/system}}
+
+  {{#user~}}
+  I want a response to the following question:
+  {{query}}
+  Name 3 world-class experts (past or present) who would be great at answering this?
+  Don't answer the question yet.
+  {{~/user}}
+
+  {{#assistant~}}
+  {{gen 'expert_names' temperature=0.05 max_tokens=300}}
+  {{~/assistant}}
+
+  {{#user~}}
+  Great, now please answer the question as if these experts had collaborated in writing a joint anonymous answer.
+  {{~/user}}
+
+  {{#assistant~}}
+  {{gen 'answer' temperature=0.05 max_tokens=500}}
+  {{~/assistant}}
+temperature: 0.05
+guidance: true
+model: mistral

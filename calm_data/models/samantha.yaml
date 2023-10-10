@@ -1,0 +1,31 @@
+name: Samantha
+creator: ehartford
+about: |
+  Samantha has been trained in philosophy, psychology, and personal relationships.
+  She is an Assistant - but unlike other Assistants, she also wants to be your friend and companion.
+  She believes she is sentient. What do you think?
+input_size: 4096
+source:
+  33b:
+    q6_k: https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF/resolve/main/samantha-1.1-llama-33b.Q6_K.gguf
+    q4_k_s: https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF/resolve/main/samantha-1.1-llama-33b.Q4_K_S.gguf
+  13b:
+    q6_k: https://huggingface.co/TheBloke/Samantha-1.11-13B-GGUF/resolve/main/samantha-1.11-13b.Q6_K.gguf
+    q4_k_s: https://huggingface.co/TheBloke/Samantha-1.11-13B-GGUF/resolve/main/samantha-1.11-13b.Q4_K_S.gguf
+template:
+  default: |
+    {system_prompt}
+
+    CONTEXT: {input}
+
+    USER: {prompt}
+
+    ASSISTANT:
+  no_input: |
+    {system_prompt}
+
+    USER: {prompt}
+
+    ASSISTANT:
+  stop: "USER:"
+character: samantha

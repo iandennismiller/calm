@@ -16,7 +16,7 @@ Windows and Linux are coming.
 ```bash
 pip install "git+https://github.com/iandennismiller/calm"
 calm download
-calm ask "What is the meaning of life?"
+calm say "What is the meaning of life?"
 ```
 
 ### Optional: create a python virtual environment first
@@ -36,10 +36,9 @@ calm list
 ```
 
 ```bash
-mistral-7b
-mistral-7b-openorca
-tiny-llama-1.1b-chat
-samantha-33b
+mistral
+samantha
+mistral-openorca
 ```
 
 ### Download a model
@@ -49,7 +48,7 @@ The following downloads a model called Samantha v1.1 33b to a folder called `~/.
 Calm will choose the right quant automatically by examining system RAM.
 
 ```bash
-calm download samantha-33b
+calm download samantha
 ```
 
 ```bash
@@ -62,7 +61,7 @@ Ask a question on the command line.
 Calm will create a model Instance to answer the question.
 
 ```bash
-calm ask "What is the meaning of life?"
+calm say "What is the meaning of life?"
 ```
 
 > AI Assistant: The meaning of life is a complex and multifaceted concept that has been pondered by philosophers, scientists, and individuals throughout history. There isn't a single definitive answer to this question, as it depends on one's personal beliefs, values, and experiences. However, some common themes in the search for meaning include finding purpose, happiness, and fulfillment through relationships, personal growth, and contributing positively to society.
@@ -74,7 +73,7 @@ Be sure to put quotes around the question so it is treated as a single argument.
 Using multi-turn prompting, simulate a Mixture of Experts and ask them a question.
 
 ```bash
-calm consult "How can we reduce traffic?"
+calm say -c mixture-of-experts "How can we reduce traffic?"
 ```
 
 ```chatml

@@ -5,7 +5,7 @@ class ChatMLTemplate(Template):
     def __init__(self):
         prompt_input = """\
 <|im_start|>system
-{system_message}{input}<|im_end|>
+{system_prompt}{input}<|im_end|>
 <|im_start|>user
 {instruction}<|im_end|>
 <|im_start|>assistant
@@ -38,7 +38,7 @@ ASSISTANT: \
 class VicunaTemplate(Template):
     def __init__(self):
         prompt_input = """\
-{system_message}{input}
+{system_prompt}{input}
 
 USER: {instruction}
 ASSISTANT: \
@@ -51,7 +51,7 @@ ASSISTANT: \
 class AlpacaTemplate(Template):
     def __init__(self):
         prompt_input = """\
-{system_message}
+{system_prompt}
 
 ### Instruction:
 {instruction}
@@ -62,7 +62,7 @@ class AlpacaTemplate(Template):
 ### Response:
 """    
         prompt_no_input =  """\
-{system_message}
+{system_prompt}
 
 ### Instruction:
 {instruction}
@@ -76,13 +76,13 @@ class AlpacaTemplate(Template):
 class LlamaTemplate(Template):
     def __init__(self):
         prompt_input = """\
-{system_message}{input}
+{system_prompt}{input}
 
 USER: {instruction}
 
 ASSISTANT:"""
         prompt_no_input = """\
-{system_message}
+{system_prompt}
 
 USER: {instruction}
 
@@ -95,7 +95,7 @@ class Llama2Template(Template):
     def __init__(self):
         prompt_input = """\
 [INST] <<SYS>>
-{system_message}{input}
+{system_prompt}{input}
 <</SYS>>
 {instruction} [/INST]
 """
@@ -107,7 +107,7 @@ class Llama2Template(Template):
 class MistralTemplate(Template):
     def __init__(self):
         prompt_input = """\
-SYSTEM: {system_message}
+SYSTEM: {system_prompt}
 
 INPUT: {input}
 
@@ -116,7 +116,7 @@ USER: {instruction}
 ASSISTANT:\
 """
         prompt_no_input = """\
-SYSTEM: {system_message}
+SYSTEM: {system_prompt}
 
 USER: {instruction}
 
@@ -129,10 +129,10 @@ ASSISTANT:\
 class OrcaTemplate(Template):
     def __init__(self):
         prompt_input = """\
-<s>[INST] {system_message}{input}{instruction} [/INST]
+<s>[INST] {system_prompt}{input}{instruction} [/INST]
 """
         prompt_no_input = """\
-<s>[INST] {system_message}{instruction} [/INST]
+<s>[INST] {system_prompt}{instruction} [/INST]
 """
         response_split = "[/INST]"
         super().__init__(prompt_input, prompt_no_input, response_split)

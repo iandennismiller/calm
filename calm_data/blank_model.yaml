@@ -1,0 +1,15 @@
+name:
+creator:
+about:
+input_size:
+source:
+  7b:
+    f16:
+    q8_0:
+    q6_k:
+    q4_k_s:
+template:
+  default:
+  no_input:
+  stop:
+character:

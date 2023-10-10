@@ -2,41 +2,54 @@ import os
 
 import uvicorn
 from llama_cpp.server.app import create_app, Settings
+from llama_cpp_guidance.llm import LlamaCpp as LlamaCppGuidance
+import guidance
 
-from .instances import Answerer, Assistant, Council
 from .utils import get_cores, has_metal
-
+from .llm import LLM
 
 class Calm:
     def __init__(self):
         pass
 
-    def answer(self, question):
-        self.instance = Answerer()
-        self.llm = self.instance.resolve_llm()
+    def answer(self, instance, question):
+        # ensure LLM is loaded
+        instance.resolve_llm()
 
-        full_prompt = self.instance.release.template.prompt_input.format(
-            system_message=self.instance.prompt.system_message,
-            instruction=question,
-            input=""
-        )
+        if instance.character.guidance:
+            guidance.llm = LlamaCppGuidance(
+                model_path=instance.resolve_path(),
+                chat_mode=True,
+                n_threads=get_cores() - 1,
+                n_gpu_layers=1 if has_metal() else 0,
+            )
 
-        result_raw = self.llm(
-            prompt=full_prompt,
-            stop=[self.instance.release.template.response_split],
-            echo=False,
-            max_tokens=-1,
-            temperature=self.instance.initialization.temperature
-        )
-        return str(result_raw['choices'][0]['text'].strip())
+            experts = guidance(instance.character.system_prompt)
+            result = experts(query=question)
+            return result
+        else:
+            full_prompt = instance.template["default"].format(
+                system_prompt=instance.character.system_prompt,
+                prompt=question,
+                input=""
+            )
+
+            result_raw = instance.llm(
+                prompt=full_prompt,
+                stop=[instance.template["stop"]],
+                echo=False,
+                max_tokens=-1,
+                temperature=0.05
+            )
+            return str(result_raw['choices'][0]['text'].strip())
 
     def api(self):
-        self.instance = Council()
+        instance = LLM.from_config(name="mistral")
         settings = Settings(
-            n_ctx=self.instance.release.architecture.context_size,
+            n_ctx=instance.input_size,
             n_threads=get_cores() - 1,
             n_gpu_layers=1 if has_metal() else 0,
-            model=self.instance.release.resolve_path()
+            model=instance.resolve_path()
         )
         app = create_app(settings=settings)
         uvicorn.run(
@@ -46,30 +59,12 @@ class Calm:
         )
 
     def list_models(self):
-        def classesinmodule(module):
-            md = module.__dict__
-            return [
-                md[c] for c in md if (
-                    isinstance(md[c], type) and md[c].__module__ == module.__name__
-                )
-            ]
+        "return a list of all available models"
 
-        import calm.releases
-        return classesinmodule(calm.releases)
+        # scan models path for all yaml files, stripping .yaml from the end
+        model_dir = f"{os.path.dirname(__file__)}/../calm_data/models"
+        model_files = os.listdir(model_dir)
+        model_files = [x for x in model_files if x.endswith(".yaml")]
+        models = [x[:-5] for x in model_files]
 
-    def consult(self, question):
-        from llama_cpp_guidance.llm import LlamaCpp
-        import guidance
-
-        self.instance = Council()
-
-        guidance.llm = LlamaCpp(
-            model_path=self.instance.release.resolve_path(),
-            chat_mode=True,
-            n_threads=get_cores() - 1,
-            n_gpu_layers=1 if has_metal() else 0,
-        )
-
-        experts = guidance(self.instance.prompt.system_message)
-        result = experts(query=question)
-        print(result)
+        return models

@@ -6,7 +6,7 @@ class ChatPrompt(Prompt):
     """
     def __init__(self):
         super().__init__(
-            system_message="""\
+            system_prompt="""\
 A chat between a curious human and an artificial intelligence assistant. The assistant gives helpful, detailed, and polite answers to the human's questions.\
 """)
 
@@ -16,7 +16,7 @@ class InstructPrompt(Prompt):
     """
     def __init__(self):
         super().__init__(
-            system_message="""\
+            system_prompt="""\
 A set of instructions for an artificial intelligence assistant. The assistant follows the instructions to complete a task.\
 """)
 
@@ -26,7 +26,7 @@ class CouncilPrompt(Prompt):
     """
     def __init__(self):
         super().__init__(
-            system_message='''
+            system_prompt='''
 {{#system~}}
 You are a helpful and terse assistant.
 {{~/system}}

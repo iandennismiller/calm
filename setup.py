@@ -27,6 +27,7 @@ setup(
         "guidance",
         "redis",
         "redis-om",
+        "pyyaml",
     ],
     extras_require={
         "dev": [

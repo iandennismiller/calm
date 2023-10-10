@@ -16,49 +16,58 @@ def get_resource_max(num_parameters):
 
     if num_parameters == "180b":
         if ram == 196:
-            return {"quant": "Q4_K_S", "context_size": 1024}
+            return {"quant": "q4_k_s", "input_size": 1024}
     elif num_parameters == "70b":
         if ram == 196:
-            return {"quant": "f16", "context_size": 8192}
+            return {"quant": "f16", "input_size": 8192}
         elif ram == 128:
-            return {"quant": "Q6_K", "context_size": 4096}
+            return {"quant": "q6_k", "input_size": 4096}
         elif ram == 64:
-            return {"quant": "Q4_K_S", "context_size": 2048}
+            return {"quant": "q4_k_s", "input_size": 2048}
     elif num_parameters in ["33b", "30b"]:
         # if ram >= 64:
-        #     return {"quant": "f16", "context_size": 8192}
+        #     return {"quant": "f16", "input_size": 8192}
         if ram >= 64:
-            return {"quant": "Q6_K", "context_size": 8192}
+            return {"quant": "q6_k", "input_size": 8192}
         elif ram == 32:
-            return {"quant": "Q4_K_S", "context_size": 2048}
+            return {"quant": "q4_k_s", "input_size": 2048}
     elif num_parameters == "13b":
         if ram >= 64:
-            return {"quant": "f16", "context_size": 8192}
+            return {"quant": "f16", "input_size": 8192}
         elif ram == 32:
-            return {"quant": "Q6_K", "context_size": 8192}
+            return {"quant": "q6_k", "input_size": 8192}
         elif ram == 16:
-            return {"quant": "Q4_K_S", "context_size": 2048}
+            return {"quant": "q4_k_s", "input_size": 2048}
     elif num_parameters == "7b":
         if ram >= 32:
-            return {"quant": "f16", "context_size": 4096}
+            return {"quant": "f16", "input_size": 8192}
         elif ram == 16:
-            return {"quant": "Q6_K", "context_size": 8192}
+            return {"quant": "q6_k", "input_size": 8192}
         elif ram == 8:
-            return {"quant": "Q4_K_S", "context_size": 2048}
+            return {"quant": "q4_k_s", "input_size": 2048}
     elif num_parameters == "3b":
         if ram >= 16:
-            return {"quant": "f16", "context_size": 8192}
+            return {"quant": "f16", "input_size": 8192}
         elif ram == 8:
-            return {"quant": "Q6_K", "context_size": 4096}
+            return {"quant": "q6_k", "input_size": 4096}
         elif ram == 4:
-            return {"quant": "Q4_K_S", "context_size": 2048}
+            return {"quant": "q4_k_s", "input_size": 2048}
     elif num_parameters == "1b":
         if ram >= 8:
-            return {"quant": "f16", "context_size": 8192}
+            return {"quant": "f16", "input_size": 8192}
         elif ram == 4:
-            return {"quant": "Q6_K", "context_size": 8192}
+            return {"quant": "q6_k", "input_size": 8192}
         elif ram == 2:
-            return {"quant": "Q4_K_S", "context_size": 2048}
+            return {"quant": "q4_k_s", "input_size": 2048}
+
+def get_optimal():
+    "which is the largest model that fits?"
+
+    optimal_model = {}
+    for size in ["180b", "70b", "30b", "13b", "7b", "3b", "1b"]:
+        optimal_model[size] = get_resource_max(size)
+    
+    return optimal_model    
 
 def has_metal():
     basepath = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer"

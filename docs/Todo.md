@@ -8,4 +8,4 @@
 - [ ] use tags for model variants; (param size, quant) is variant
 - [ ] consider how ollama Modelfile is sortof like an instance
 - [ ] implement mapping from variant to URL
-
+- [ ] new syntax: calm tell [agent/model] "question/instruction"
