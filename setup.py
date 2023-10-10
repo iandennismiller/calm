@@ -43,5 +43,5 @@ setup(
         ]
     },
     license='MIT',
-    zip_safe=True,
+    zip_safe=False,
 )

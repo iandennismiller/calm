@@ -1,0 +1,20 @@
+{
+    "python.pythonPath": "~/.virtualenvs/calm/bin/python",
+    "files.exclude": {
+        "**/__pycache__/": true,
+        "**/build/": true,
+        "**/dist/": true,
+        "**/*.egg-info/": true,
+        "**/.vscode/": true,
+	"**/.pytest_cache/": true
+    },
+    "search.exclude": {
+        "**/build/": true
+    },
+    "python.testing.pytestArgs": [
+        "tests"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestPath": "~/.virtualenvs/calm/bin/pytest",
+    "python.testing.pytestEnabled": true
+}
