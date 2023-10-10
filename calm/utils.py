@@ -80,3 +80,15 @@ def has_metal():
 def get_cores():
     # return the number of cores this CPU has
     return psutil.cpu_count(logical=False)
+
+def get_smaller_quants(cutoff_quant):
+    quant_map = {
+        "f16": 20,
+        "q8_0": 18,
+        "q6_k": 16,
+        "q4_k_s": 10,
+    }
+    current_quant = quant_map[cutoff_quant]
+    for quant, value in quant_map.items():
+        if value < current_quant:
+            yield quant

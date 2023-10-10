@@ -6,7 +6,7 @@ import requests
 
 from llama_cpp import Llama as LlamaCpp
 
-from .utils import get_resource_max, has_metal, get_cores
+from .utils import get_resource_max, has_metal, get_cores, get_smaller_quants
 
 
 class LLM:
@@ -89,6 +89,11 @@ class LLM:
                 resource_max = get_resource_max(size)
                 if resource_max["quant"] in self.source[size]:
                     return {"size": size, "quant": resource_max["quant"]}
+                else:
+                    available = self.source[size].keys()
+                    for quant in get_smaller_quants(resource_max["quant"]):
+                        if quant in available:
+                            return {"size": size, "quant": quant}
 
     def resolve_llm(self):
         if self.llm is None:
