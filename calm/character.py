@@ -18,7 +18,7 @@ class Character:
         if (name is None and filename is None) or (name is not None and filename is not None):
             raise Exception("Must specify either name or filename")
         if name:
-            filename = f"{os.path.dirname(__file__)}/../calm_data/characters/{name}.yaml"
+            filename = f"{os.path.dirname(__file__)}/descriptions/characters/{name}.yaml"
         with open(filename, "r") as f:
             config = yaml.load(f, Loader=yaml.FullLoader)
         return cls(

@@ -44,7 +44,7 @@ class LLM:
     def get_model_dir(self):
         url = self.source[self.model_size][self.quant]
         hf_slug = f'{url.split("/")[3]}/{url.split("/")[4]}'
-        model_path = os.path.join(os.environ['CALM_ROOT'], hf_slug)
+        model_path = os.path.join(os.environ.get('CALM_ROOT', '~/.ai/models/llama'), hf_slug)
         model_path = os.path.expanduser(model_path)
         return model_path
 
@@ -115,7 +115,7 @@ class LLM:
 
     @classmethod
     def from_config(cls, name):
-        check_filename = f"{os.path.dirname(__file__)}/../calm_data/models/{name}.yaml"
+        check_filename = f"{os.path.dirname(__file__)}/descriptions/models/{name}.yaml"
         
         if os.path.exists(check_filename):
             filename = check_filename

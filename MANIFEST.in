@@ -1,1 +1,1 @@
-recursive-include calm_data *.yaml
+recursive-include calm/descriptions *.yaml

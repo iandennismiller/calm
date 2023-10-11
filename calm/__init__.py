@@ -62,7 +62,7 @@ class Calm:
         "return a list of all available models"
 
         # scan models path for all yaml files, stripping .yaml from the end
-        model_dir = f"{os.path.dirname(__file__)}/../calm_data/models"
+        model_dir = f"{os.path.dirname(__file__)}/descriptions/models"
         model_files = os.listdir(model_dir)
         model_files = [x for x in model_files if x.endswith(".yaml")]
         models = [x[:-5] for x in model_files]
