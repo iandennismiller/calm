@@ -9,6 +9,7 @@ Windows and Linux are coming.
 
 ## Quick Start
 
+0. (optional) create a python virtual environment; see note below
 1. install the python package
 2. download a language model
 3. ask a question
@@ -29,7 +30,7 @@ source ~/.ai/venv/bin/activate
 
 ## Usage
 
-### List available model releases
+### List available models
 
 ```bash
 calm list
@@ -39,20 +40,6 @@ calm list
 mistral
 samantha
 mistral-openorca
-```
-
-### Download a model
-
-The following downloads a model called Samantha v1.1 33b to a folder called `~/.ai/models/llama`.
-
-Calm will choose the right quant automatically by examining system RAM.
-
-```bash
-calm download samantha
-```
-
-```bash
-Downloading...
 ```
 
 ### Ask a question
@@ -68,9 +55,32 @@ calm say "What is the meaning of life?"
 
 Be sure to put quotes around the question so it is treated as a single argument.
 
+To talk to a specific model, use the `-m` flag:
+
+```bash
+calm say -m samantha "How are you today?"
+```
+
+To talk to a specific character, use the `-c` flag:
+
+```bash
+calm say -c mixture-of-experts "How can we reduce traffic?"
+```
+
+### Download a model
+
+Downloads a model called Samantha to a folder called `~/.ai/models/llama`.
+
+Calm will choose the right quant automatically by examining system RAM.
+
+```bash
+calm download samantha
+```
+
 ### Consult a simulated Mixture of Experts
 
 Using multi-turn prompting, simulate a Mixture of Experts and ask them a question.
+This uses the character flag `-c` to select mixture-of-experts.
 
 ```bash
 calm say -c mixture-of-experts "How can we reduce traffic?"
@@ -90,6 +100,12 @@ Don't answer the question yet.<|im_end|>
 I understand that you want me to provide information without directly answering the question. Here are 3 world-class experts and their respective fields, who could potentially offer valuable insights on reducing traffic ...<|im_end|>
 ```
 
+Use the mixture-of-experts character with the samantha model:
+
+```bash
+calm say -c mixture-of-experts -m samantha "How can we reduce traffic?"
+```
+
 ### Launch API server
 
 Run the OpenAI-compatible API on localhost:
@@ -103,6 +119,12 @@ INFO:     Started server process [99517]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
 INFO:     Uvicorn running on http://localhost:8000 (Press CTRL+C to quit)
+```
+
+Run API with a specific model:
+
+```bash
+calm api -m samantha
 ```
 
 ### Based on your RAM, which model sizes can you run?
@@ -125,19 +147,19 @@ calm max
 
 It is possible for your system to support a larger context than the model architecture provides.
 
-## Model Ontology
+## Adding models and characters
 
-Behind the scenes, `calm` specifies an ontology for describing how a large language model is used.
-The following classes can be extended to support new models, templates, and styles of prompting.
+To add a new model or character, create a new YAML description file in [the descriptions folder](https://github.com/iandennismiller/calm/tree/main/calm/descriptions):
 
-- **Instance**: a specific combination of a model **Release** (which implies **Architecture** and **Template**), **Initialization**, and **Prompt**.
-- **Release**: a model of a specific **Architecture** that has been trained on a dataset.
-- **Architecture**: how the model is structured, including layers, connections, and activation functions.
-- **Template**: the structure of the input that a model was trained on.
-- **Initialization**: the values provided to the LLM engine.
-- **Prompt**: provides the model with general instructions for how to handle input, context, and query to generate output.
+- [model descriptions](https://github.com/iandennismiller/calm/tree/main/calm/descriptions/models)
+- [characters descriptions](https://github.com/iandennismiller/calm/tree/main/calm/descriptions/characters)
 
-A user actually interacts with an Instance of a model; everything else is simply used to describe how that Instance operates.
+Use these templates to get started:
+
+- [blank_model.yaml](https://github.com/iandennismiller/calm/blob/main/calm/descriptions/blank_model.yaml)
+- [blank_character.yaml](https://github.com/iandennismiller/calm/blob/main/calm/descriptions/blank_character.yaml)
+
+Finally, please submit a pull request with your new YAML files in the descriptions folder.
 
 ## Models used by calm
 
@@ -145,19 +167,49 @@ A user actually interacts with an Instance of a model; everything else is simply
 I've made opinionated choices in this regard and I believe the vast majority of use cases are supported by just three model sizes:
 
 - `f16`: unquantized, largest size, slowest computation, and best results
-- `Q6_k`: smaller and faster than unquantized, good results
+- `Q6_k`: smaller and faster than unquantized, good results, often better than q8_0
 - `Q4_K_S`: smallest quant that still produces acceptable results
 
-Because this is a slightly atypical collection of sizes, I generally provide my own model repositories via Hugging Face.
+The following models described as YAML for calm:
 
-- [mistral-7b](https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF)
-- [mistral-7b-openorca](https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF)
-- [tinyllama-1.1b-chat](https://huggingface.co/iandennismiller/TinyLlama-1.1B-Chat-v0.3-GGUF)
-- [medtext-13b](https://huggingface.co/iandennismiller/LLama-2-MedText-13b-GGUF)
-- [samantha-llama-33b](https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF)
+- [mistral](https://huggingface.co/iandennismiller/mistral-v0.1-7b-GGUF)
+- [mistral-openorca](https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF)
+- [tinyllama-chat](https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v0.3-GGUF)
+- [medtext](https://huggingface.co/iandennismiller/LLama-2-MedText-13b-GGUF)
+- [samantha](https://huggingface.co/iandennismiller/samantha-1.1-llama-33b-GGUF)
 
 I would be remiss if I didn't mention the important contributions of [TheBloke](https://huggingface.co/TheBloke), who has provided great coverage of model quants.
 In some cases, I am directly re-hosting models they have quantized - but in most cases, I've performed my own conversions and quantizations to meet the specific goals of `calm`.
+
+### Rational for quants
+
+I refer to the [llama.cpp quantize example](https://github.com/ggerganov/llama.cpp/tree/master/examples/quantize) to examine the impact of quantization upon perplexity.
+
+```txt
+   2  or  Q4_0   :  3.56G, +0.2166 ppl @ LLaMA-v1-7B
+   3  or  Q4_1   :  3.90G, +0.1585 ppl @ LLaMA-v1-7B
+   8  or  Q5_0   :  4.33G, +0.0683 ppl @ LLaMA-v1-7B
+   9  or  Q5_1   :  4.70G, +0.0349 ppl @ LLaMA-v1-7B
+  10  or  Q2_K   :  2.63G, +0.6717 ppl @ LLaMA-v1-7B
+  12  or  Q3_K   : alias for Q3_K_M
+  11  or  Q3_K_S :  2.75G, +0.5551 ppl @ LLaMA-v1-7B
+  12  or  Q3_K_M :  3.07G, +0.2496 ppl @ LLaMA-v1-7B
+  13  or  Q3_K_L :  3.35G, +0.1764 ppl @ LLaMA-v1-7B
+  15  or  Q4_K   : alias for Q4_K_M
+  14  or  Q4_K_S :  3.59G, +0.0992 ppl @ LLaMA-v1-7B
+  15  or  Q4_K_M :  3.80G, +0.0532 ppl @ LLaMA-v1-7B
+  17  or  Q5_K   : alias for Q5_K_M
+  16  or  Q5_K_S :  4.33G, +0.0400 ppl @ LLaMA-v1-7B
+  17  or  Q5_K_M :  4.45G, +0.0122 ppl @ LLaMA-v1-7B
+  18  or  Q6_K   :  5.15G, -0.0008 ppl @ LLaMA-v1-7B
+   7  or  Q8_0   :  6.70G, +0.0004 ppl @ LLaMA-v1-7B
+   1  or  F16    : 13.00G              @ 7B
+   0  or  F32    : 26.00G              @ 7B
+```
+
+According to these results, Q8_0 is a little worse than Q6_K despite being larger.
+Therefore, I've opted for Q6_K in all cases.
+I selected Q4_K_S for smaller systems as a compromise; perplexity is severely impacted below that size.
 
 ## Libraries used by calm
 
