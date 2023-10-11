@@ -7,6 +7,8 @@ import guidance
 
 from .utils import get_cores, has_metal
 from .llm import LLM
+from .character import Character
+
 
 class Calm:
     def __init__(self):
@@ -28,10 +30,10 @@ class Calm:
             result = experts(query=question)
             return result
         else:
-            full_prompt = instance.template["default"].format(
+            full_prompt = instance.template["no_input"].format(
                 system_prompt=instance.character.system_prompt,
                 prompt=question,
-                input=""
+                # input=""
             )
 
             result_raw = instance.llm(
@@ -43,8 +45,7 @@ class Calm:
             )
             return str(result_raw['choices'][0]['text'].strip())
 
-    def api(self):
-        instance = LLM.from_config(name="mistral")
+    def api(self, instance):
         settings = Settings(
             n_ctx=instance.input_size,
             n_threads=get_cores() - 1,
@@ -68,3 +69,30 @@ class Calm:
         models = [x[:-5] for x in model_files]
 
         return models
+
+    def get_instance(self, model, character, quiet=False):
+        instance = None
+        loaded_character = None
+
+        if character:
+            loaded_character = Character.from_config(name=character)
+            if model is None:
+                model = loaded_character.model
+        
+        # if the model is still none, default to Mistral
+        if model is None:
+            model = "mistral"
+
+        instance = LLM.from_config(name=model)
+
+        if loaded_character:
+            instance.character = loaded_character
+        elif instance.character is not None:
+            instance.character = Character.from_config(name=instance.character)
+        else:
+            instance.character = Character.from_config(name="chatter-gpt")
+
+        if not quiet:
+            print(f"Loaded {instance}, {instance.character}")
+        
+        return instance

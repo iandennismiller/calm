@@ -1,0 +1,25 @@
+name: TinyLlama
+creator: Zhang Peiyuan
+about: The TinyLlama project aims to pretrain a 1.1B Llama model on 3 trillion tokens. With some proper optimization, we can achieve this within a span of "just" 90 days using 16 A100-40G GPUs 🚀🚀. The training has started on 2023-09-01. 
+input_size: 2048
+source:
+  1b:
+    q6_k: https://huggingface.co/iandennismiller/TinyLlama-1.1B-Chat-v0.3-GGUF/resolve/main/tinyllama-1.1b-chat-v0.3.Q6_K.gguf
+    q4_k_s: https://huggingface.co/iandennismiller/TinyLlama-1.1B-Chat-v0.3-GGUF/resolve/main/tinyllama-1.1b-chat-v0.3.Q4_K_S.gguf
+template:
+  default: |
+    <|im_start|>system
+    {system_prompt}<|im_end|>
+    <|im_start|>input
+    {input}<|im_end|>
+    <|im_start|>user
+    {prompt}<|im_end|>
+    <|im_start|>assistant
+  no_input: |
+    <|im_start|>system
+    {system_prompt}<|im_end|>
+    <|im_start|>user
+    {prompt}<|im_end|>
+    <|im_start|>assistant
+  stop: "<|im_start|>user"
+character: chatter-gpt

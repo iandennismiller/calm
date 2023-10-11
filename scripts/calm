@@ -8,7 +8,6 @@ from dotenv import load_dotenv
 from calm import Calm
 from calm.utils import get_resource_max
 from calm.llm import LLM
-from calm.character import Character
 
 
 @click.group()
@@ -22,40 +21,20 @@ def cli():
 @click.argument('words', type=str)
 def say(words, model, character, quiet):
     "Say some words to a model or character"
-    instance = None
-    loaded_character = None
-
     calm = Calm()
-
-    if character:
-        loaded_character = Character.from_config(name=character)
-        if model is None:
-            model = loaded_character.model
-    
-    # if the model is still none, default to Mistral
-    if model is None:
-        model = "mistral"
-
-    instance = LLM.from_config(name=model)
-
-    if loaded_character:
-        instance.character = loaded_character
-    elif instance.character is not None:
-        instance.character = Character.from_config(name=instance.character)
-    else:
-        instance.character = Character.from_config(name="chatter-gpt")
-
-    if not quiet:
-        print(f"Loaded {instance}, {instance.character}")
-    
+    instance = calm.get_instance(model, character, quiet)
     answer = calm.answer(instance, words)
     print(answer)
 
 @cli.command()
-def api():
+@click.option('-m', '--model', type=str, required=False)
+@click.option('-c', '--character', type=str, required=False)
+@click.option('-q', '--quiet', is_flag=True, default=False)
+def api(model, character, quiet):
     "Run the API (compatible w/ OpenAI)"
     calm = Calm()
-    calm.api()
+    instance = calm.get_instance(model, character, quiet)
+    calm.api(instance)
 
 @cli.command('list')
 def list_models():

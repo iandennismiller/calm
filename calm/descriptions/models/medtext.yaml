@@ -1,0 +1,25 @@
+name: truehealth/LLama-2-MedText-13b
+creator: truehealth
+about: Llama-2-13b-hf Trained for 5 epochs on MedText dataset
+input_size: 4096
+source:
+  13b:
+    f16: https://huggingface.co/iandennismiller/LLama-2-MedText-13b-GGUF/resolve/main/LLama-2-MedText-13b-f16.gguf
+    q6_k: https://huggingface.co/iandennismiller/LLama-2-MedText-13b-GGUF/resolve/main/LLama-2-MedText-13b-Q6_K.gguf
+    q4_k_s: https://huggingface.co/iandennismiller/LLama-2-MedText-13b-GGUF/resolve/main/LLama-2-MedText-13b-Q4_K_S.gguf
+template:
+  default: |
+    [INST] <<SYS>>
+    {system_prompt}
+    <</SYS>>
+    <<CONTEXT>>
+    {input}
+    <</CONTEXT>>
+    {prompt}[/INST]
+  no_input: |
+    [INST] <<SYS>>
+    {system_prompt}
+    <</SYS>>
+    {prompt}[/INST]
+  stop: "[INST]"
+character: chatter-gpt
