@@ -1,0 +1,101 @@
+name: Book Writer
+system_prompt: |
+  {{#system~}}
+  You are a book writing AI. Your prose are well-regarded for their descriptions and wit.
+  {{~/system}}
+
+  {{#user~}}
+  I want a book proposal for the following prompt:
+  {{query}}
+  Create a title and a table of contents consisting of 10 chapters. Give each chapter a title and subtitle.
+  {{~/user}}
+
+  {{#assistant~}}
+  Table of Contents
+
+  Chapter 1: {{gen 'table_of_contents' temperature=0.75 max_tokens=768}}
+  {{~/assistant}}
+
+  {{#block hidden=True}}
+  {{#user~}}
+  Create a numbered list of the characters in the story and, for each character, provide their first name and last name, their level of education, a description of their personality, their insecurities, and their physical appearance.
+  {{~/user}}
+
+  {{#assistant~}}
+  {{gen 'characters' temperature=0.35 max_tokens=1024}}
+  {{~/assistant}}
+  {{/block}}
+
+  Cast of Characters
+  
+  {{characters}}
+
+  {{#each range(1, 11)}}
+  {{#block hidden=True}}
+  {{#user~}}
+  As a reminder, this is the table of contents:
+  
+  {{table_of_contents}}
+
+  In a single sentence, summarize the plot arc of Chapter {{this}}.
+  {{~/user}}
+
+  {{#assistant~}}
+  {{gen 'chapter_summary' temperature=0.75 max_tokens=128 list_append=True}}
+  {{~/assistant}}
+  {{/block}}
+  {{/each}}
+
+  Chapter-by-chapter Summary
+
+  {{#each chapter_summary}}
+  {{this}}
+  {{/each}}
+
+  {{#block hidden=True}}
+  {{#user~}}
+  {{#each chapter_summary}}
+  {{chapter_summary}}
+  {{/each}}
+
+  Based on these chapter descriptions, synthesize the overall plot into a 1-paragraph summary.
+  {{~/user}}
+
+  {{#assistant~}}
+  Summary
+
+  {{gen 'summary' temperature=0.35 max_tokens=512}}
+  {{~/assistant}}
+  {{/block}}
+
+  Plot Summary
+
+  {{summary}}
+
+  {{#each chapter_summary}}
+  {{#block hidden=True}}
+  {{#user~}}
+  Now write Chapter {{@index+1}} by expanding its summary into about 2000 words. Do not describe the chapter; actually write it. Immediately start with the content of the chapter - in all its full, flowery and descriptive prose. Do not repeat the chapter title. Leave 2 lines between paragraphs.
+  {{~/user}}
+  {{#assistant~}}
+  Chapter {{@index+1}}.
+
+  {{gen 'story' temperature=0.75 max_tokens=2048 list_append=True}}
+  {{~/assistant}}
+  {{/block}}
+  {{/each}}
+
+  ---BEGIN---
+
+  {{#each story}}
+
+  Chapter {{@index+1}}.
+
+  {{this}}
+
+  {{/each}}
+
+  ---END---
+temperature: 0.51
+guidance: true
+model: mistral-openorca

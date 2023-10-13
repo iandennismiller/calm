@@ -22,6 +22,8 @@ class Calm:
             guidance.llm = LlamaCppGuidance(
                 model_path=instance.resolve_path(),
                 chat_mode=True,
+                seed=-1,
+                n_ctx=instance.input_size,
                 n_threads=get_cores() - 1,
                 n_gpu_layers=1 if has_metal() else 0,
             )
