@@ -5,7 +5,13 @@ input_size:
 source:
   7b:
     f16:
-    q8_0:
+    q6_k:
+    q4_k_s:
+  13b:
+    f16:
+    q6_k:
+    q4_k_s:
+  33b:
     q6_k:
     q4_k_s:
 template:
@@ -13,3 +19,4 @@ template:
   no_input:
   stop:
 character:
+qualification: false

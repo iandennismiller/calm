@@ -2,10 +2,9 @@ name: Mistral OpenOrca
 creator: OpenOrca
 about: |
   We have used our own OpenOrca dataset to fine-tune on top of Mistral 7B. This dataset is our attempt to reproduce the dataset generated for Microsoft Research's Orca Paper. We use OpenChat packing, trained with Axolotl.
-input_size: 8192
+input_size: 32768
 source:
   7b:
-    q8_0: https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF/resolve/main/mistral-7b-openorca.Q8_0.gguf
     q6_k: https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF/resolve/main/mistral-7b-openorca.Q6_K.gguf
     q4_k_s: https://huggingface.co/TheBloke/Mistral-7B-OpenOrca-GGUF/resolve/main/mistral-7b-openorca.Q4_K_S.gguf
 template:
@@ -25,3 +24,4 @@ template:
     <|im_start|>assistant
   stop: "<|im_start|>user"
 character: chatter-gpt
+qualification: false

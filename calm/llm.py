@@ -14,12 +14,13 @@ class LLM:
     A Release is an architecture that has been trained with a specific set of inputs, or that is produced by combining weights from similar architectures.
     A release combines an architecture, the number of parameters, its trained/learned weights (as written to a file), and a compatible template.
     """
-    def __init__(self, name, input_size, source, template, model_size=None, quant=None, character=None):
+    def __init__(self, name, input_size, source, template, qualification, model_size=None, quant=None, character=None):
         self.name = name
         self.input_size = input_size
         self.source = source
         self.template = template
         self.character = character
+        self.qualification = qualification
 
         biggest = self.get_biggest()
 
@@ -132,6 +133,7 @@ class LLM:
             source=config["source"],
             template=config["template"],
             character=config["character"] if "character" in config else None,
+            qualification=config["qualification"],
         )
 
     def __repr__(self):

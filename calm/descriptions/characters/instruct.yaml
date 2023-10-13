@@ -1,0 +1,5 @@
+name: Instruct
+system_prompt: Below is an instruction that describes a task. Write a response that appropriately completes the request.
+temperature: 0.05
+guidance: false
+model: mistral-openorca

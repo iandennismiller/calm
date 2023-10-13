@@ -1,0 +1,5 @@
+name: Coder
+system_prompt: "Write code to solve the following coding problem that obeys the constraints and passes the example test cases. Please wrap your code answer using ```:"
+temperature: 0.05
+guidance: false
+model: codellama-instruct

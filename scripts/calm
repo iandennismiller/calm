@@ -37,23 +37,40 @@ def api(model, character, quiet):
     calm.api(instance)
 
 @cli.command('list')
-def list_models():
+@click.option('--health', is_flag=True, default=False)
+@click.option('--nsfw', is_flag=True, default=False)
+def list_models(health, nsfw):
     "List available model releases"
     calm = Calm()
-    for model in calm.list_models():
-        print(model)
+    for model_name in calm.list_models():
+        instance = LLM.from_config(name=model_name)
+        if instance.qualification not in ["health", "nsfw"]:
+            print(model_name)
+
+    if health is True or nsfw is True:
+        print("--- The following models are not for general use ---")
+        for model_name in calm.list_models():
+            instance = LLM.from_config(name=model_name)
+            if instance.qualification == "health" and health is True:
+                print(f"HEALTH: {model_name}")
+            elif instance.qualification == "nsfw" and nsfw is True:
+                print(f"NFSW:    {model_name}")
 
 @cli.command()
 @click.argument('model_name', type=str, default="mistral")
-def download(model_name):
+@click.option('--health', is_flag=True, default=False)
+@click.option('--nsfw', is_flag=True, default=False)
+def download(model_name, health, nsfw):
     "Download a model"
     calm = Calm()
-    models = calm.list_models()
-    if model_name in models:
+    if model_name in calm.list_models():
         instance = LLM.from_config(name=model_name)
-        print(f"Downloading {instance}...")
-        instance.download()
-        print(f"Downloaded model to {instance.resolve_path()}")
+        if instance.qualification not in ["health", "nsfw"] or (instance.qualification == "health" and health is True) or (instance.qualification == "nsfw" and nsfw is True):
+            print(f"Downloading {instance}...")
+            instance.download()
+            print(f"Downloaded model to {instance.resolve_path()}")
+        else:
+            print(f"That model is not for general use. Try `calm list` to see available models.")
     else:
         print("That model is not available. Try `calm list` to see available models.")
 

@@ -1,0 +1,29 @@
+name: CodeLlama Instruct
+creator: Meta
+about: Code Llama is a collection of pretrained and fine-tuned generative text models ranging in scale from 7 billion to 34 billion parameters. ... This model is designed for general code synthesis and understanding...
+input_size: 2048
+source:
+  7b:
+    q6_k: https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q6_K.gguf
+    q4_k_s: https://huggingface.co/TheBloke/CodeLlama-7B-Instruct-GGUF/resolve/main/codellama-7b-instruct.Q4_K_S.gguf
+  13b:
+    q6_k: https://huggingface.co/TheBloke/CodeLlama-13B-Instruct-GGUF/resolve/main/codellama-13b-instruct.Q6_K.gguf
+    q4_k_s: https://huggingface.co/TheBloke/CodeLlama-13B-Instruct-GGUF/resolve/main/codellama-13b-instruct.Q4_K_S.gguf
+  33b:
+    q6_k: https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF/resolve/main/codellama-34b-instruct.Q6_K.gguf
+    q4_k_s: https://huggingface.co/TheBloke/CodeLlama-34B-Instruct-GGUF/resolve/main/codellama-34b-instruct.Q4_K_S.gguf
+template:
+  default: |
+    [INST] {system_prompt}
+
+    [CONTEXT]{input}[/CONTEXT]
+
+    {prompt}
+    [/INST]
+  no_input: |
+    [INST] {system_prompt}
+    {prompt}
+    [/INST]
+  stop:
+character: coder
+qualification: false

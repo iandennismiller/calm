@@ -1,5 +1,5 @@
 name: Mixture of Experts
-system_prompt: |
+system_prompt: |\
   {{#system~}}
   You are a helpful and terse assistant.
   {{~/system}}

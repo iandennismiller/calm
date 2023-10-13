@@ -29,3 +29,4 @@ template:
     ASSISTANT:
   stop: "USER:"
 character: samantha
+qualification: false

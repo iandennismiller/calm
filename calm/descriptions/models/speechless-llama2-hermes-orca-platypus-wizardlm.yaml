@@ -1,0 +1,29 @@
+name: Speechess Lllama2 Hermes Orca-Platypus WizardLM
+creator: Jiangwen Su
+about: speechless-llama2-hermes-orca-platypus-wizardlm-13b is a merge of NousResearch/Nous-Hermes-Llama2-13b, Open-Orca/OpenOrca-Platypus2-13B and WizardLM/WizardLM-13B-V1.2.
+input_size: 4096
+source:
+  13b:
+    q6_k: https://huggingface.co/TheBloke/Speechless-Llama2-Hermes-Orca-Platypus-WizardLM-13B-GGUF/resolve/main/speechless-llama2-hermes-orca-platypus-wizardlm-13b.Q6_K.gguf
+    q4_k_s: https://huggingface.co/TheBloke/Speechless-Llama2-Hermes-Orca-Platypus-WizardLM-13B-GGUF/resolve/main/speechless-llama2-hermes-orca-platypus-wizardlm-13b.Q4_K_S.gguf
+template:
+  default: |
+    {system_prompt}
+
+    ### Input:
+    {input}
+
+    ### Instruction:
+    {prompt}
+
+    ### Response:
+  no_input: |
+    {system_prompt}
+
+    ### Instruction:
+    {prompt}
+
+    ### Response:
+  stop: "### Instruction:"
+character: instruct
+qualification: false

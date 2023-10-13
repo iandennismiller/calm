@@ -1,4 +1,4 @@
-name: truehealth/LLama-2-MedText-13b
+name: LLama-2-MedText
 creator: truehealth
 about: Llama-2-13b-hf Trained for 5 epochs on MedText dataset
 input_size: 4096
@@ -23,3 +23,4 @@ template:
     {prompt}[/INST]
   stop: "[INST]"
 character: chatter-gpt
+qualification: health
