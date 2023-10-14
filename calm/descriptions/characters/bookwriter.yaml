@@ -7,7 +7,7 @@ system_prompt: |
   {{#user~}}
   I want a book proposal for the following prompt:
   {{query}}
-  Create a title and a table of contents consisting of 10 chapters. Give each chapter a title and subtitle.
+  Create a title and a table of contents consisting of 4 chapters. Give each chapter a title and subtitle.
   {{~/user}}
 
   {{#assistant~}}
@@ -18,7 +18,7 @@ system_prompt: |
 
   {{#block hidden=True}}
   {{#user~}}
-  Create a numbered list of the characters in the story and, for each character, provide their first name and last name, their level of education, a description of their personality, their insecurities, and their physical appearance.
+  Create a numbered list of the characters in the story and, for each character, briefly provide their first name and last name, personality, and their physical appearance.
   {{~/user}}
 
   {{#assistant~}}
@@ -30,14 +30,14 @@ system_prompt: |
   
   {{characters}}
 
-  {{#each range(1, 11)}}
+  {{#each range(1, 5)}}
   {{#block hidden=True}}
   {{#user~}}
   As a reminder, this is the table of contents:
   
   {{table_of_contents}}
 
-  In a single sentence, summarize the plot arc of Chapter {{this}}.
+  In a single sentence, factually summarize the plot arc of Chapter {{this}}. Explain all secrets and plot points; do not build suspense.
   {{~/user}}
 
   {{#assistant~}}

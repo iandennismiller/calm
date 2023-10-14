@@ -13,3 +13,4 @@
 /**/*_files/
 /**/*.pyc
 .env
+main*.log
