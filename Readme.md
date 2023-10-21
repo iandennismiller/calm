@@ -24,6 +24,14 @@ Windows and Linux should generally work without GPU acceleration.
 pip install "git+https://github.com/iandennismiller/calm"
 ```
 
+#### Optional: Python virtual environment
+
+```bash
+mkdir -p ~/.local/share/calm
+python3 -m venv ~/.local/share/calm/venv
+source ~/.local/share/calm/venv/bin/activate
+```
+
 ### Usage
 
 ```bash
@@ -31,14 +39,6 @@ calm download
 calm say "What is the meaning of life?"
 calm learn "My name is Gilgamesh."
 calm say --kb "What is my name?"
-```
-
-### Optional: python virtual environment
-
-```bash
-mkdir -p ~/.local/share/calm
-python3 -m venv ~/.local/share/calm/venv
-source ~/.local/share/calm/venv/bin/activate
 ```
 
 ## Usage
