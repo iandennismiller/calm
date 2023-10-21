@@ -1,11 +1,13 @@
 # Calm: A peaceful user experience for Large Language Models
 
-Calm is a python 3.9+ package that makes it easier to work with large language models.
+Calm is a python 3.9+ package that makes it easier to work with large language models, including downloading the model and talking to it.
 
 Calm automatically uses the right template for each model, supports multiple prompting styles, and chooses parameters based on your CPU, GPU and RAM.
 
-Calm supports Apple Silicon out of the box.
-Windows and Linux are coming.
+Calm also provides advanced LLM features like Retrieval-Augmented Generation (RAG) with [chromadb](https://github.com/chroma-core/chroma), multi-turn prompting with [Guidance](https://github.com/guidance-ai/guidance), and an OpenAI-compatible API to support external clients.
+
+Calm is accelerated on Apple Silicon out of the box thanks to [llama.cpp]https://github.com/ggerganov/llama.cpp/().
+Windows and Linux should generally work without GPU acceleration.
 
 ## Quick Start
 
@@ -115,8 +117,8 @@ calm say --path /tmp/kb1 "Which client do I know facts about?"
 
 ### Consult a simulated Mixture of Experts
 
-Using multi-turn prompting, simulate a Mixture of Experts and ask them a question.
-This uses the character flag `-c` to select mixture-of-experts.
+Using multi-turn prompting with [Guidance](https://github.com/guidance-ai/guidance), simulate a [Mixture of Experts](https://en.wikipedia.org/wiki/Mixture_of_experts) and ask them a question.
+This uses the character flag `-c` to select [mixture-of-experts](https://github.com/iandennismiller/calm/blob/main/calm_data/characters/mixture-of-experts.yaml).
 
 ```bash
 calm say -c mixture-of-experts "How can we reduce traffic?"
