@@ -33,7 +33,7 @@ def say(words, model, character, quiet, path, host, num, localhost, kb):
     if localhost is True:
         host = "localhost:7999"
     if kb is True and path == "":
-        path = os.path.expanduser("~/.local/share/calm")
+        path = os.path.expanduser("~/.local/share/calm/kb")
 
     if host == "":
         host = None

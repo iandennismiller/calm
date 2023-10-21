@@ -20,7 +20,7 @@ class ContextStorage(object):
         logging.getLogger('chromadb').setLevel(logging.ERROR)
 
         if chroma_persist_dir is None:
-            chroma_persist_dir = os.path.expanduser("~/.local/share/calm")
+            chroma_persist_dir = os.path.expanduser("~/.local/share/calm/kb")
 
         # Create Chroma collection
         if host is not None and len(host) > 0:

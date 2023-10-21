@@ -13,11 +13,15 @@ Windows and Linux are coming.
 1. install the python package
 2. download a language model
 3. ask a question
+4. add to a knowledgebase
+5. ask a question; augment from knowledgebase
 
 ```bash
 pip install "git+https://github.com/iandennismiller/calm"
 calm download
 calm say "What is the meaning of life?"
+calm learn "My name is Gilgamesh."
+calm say --kb "What is my name?"
 ```
 
 ### Optional: create a python virtual environment first
@@ -69,12 +73,44 @@ calm say -c mixture-of-experts "How can we reduce traffic?"
 
 ### Download a model
 
-Downloads a model called Samantha to a folder called `~/.ai/models/llama`.
+Downloads a model called Samantha to a folder called `~/.local/share/calm/models`.
 
 Calm will choose the right quant automatically by examining system RAM.
 
 ```bash
 calm download samantha
+```
+
+### Retrieval-Augmented Generation
+
+`calm` can learn and recall facts in a knowledgebase.
+By default, the storage path is `~/.local/share/calm/kb`.
+
+```bash
+calm learn "I use github"
+calm learn "I write code"
+calm learn "I store my code on github"
+calm learn "My name is Gilgamesh"
+calm recall "name"
+```
+
+`calm` can retrieve knowledge to provide context for LLM response generation.
+Provide the `-k` flag to tell `calm` to use knowledge:
+
+```bash
+calm say -k "Where does Gilgamesh store their code?"
+```
+
+```txt
+Gilgamesh stores their code on GitHub
+```
+
+Store each knowledgebase in a separate path.
+
+```bash
+calm learn --path /tmp/kb1 "Facts about client 1"
+calm learn --path /tmp/kb2 "Facts about client 17"
+calm say --path /tmp/kb1 "Which client do I know facts about?"
 ```
 
 ### Consult a simulated Mixture of Experts

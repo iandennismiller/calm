@@ -45,7 +45,7 @@ class LLM:
     def get_model_dir(self):
         url = self.source[self.model_size][self.quant]
         hf_slug = f'{url.split("/")[3]}/{url.split("/")[4]}'
-        model_path = os.path.join(os.environ.get('CALM_ROOT', '~/.ai/models/llama'), hf_slug)
+        model_path = os.path.join(os.environ.get('CALM_ROOT', '~/.local/share/calm/models'), hf_slug)
         model_path = os.path.expanduser(model_path)
         return model_path
 
