@@ -12,5 +12,6 @@
 /**/*_cache/
 /**/*_files/
 /**/*.pyc
-.env
-main*.log
+/**/.env
+/**/main*.log
+/**/chroma.log

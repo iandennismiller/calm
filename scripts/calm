@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
+import os
 import sys
+import json
 
 import click
 from dotenv import load_dotenv
@@ -8,6 +10,7 @@ from dotenv import load_dotenv
 from calm import Calm
 from calm.utils import get_resource_max
 from calm.llm import LLM
+from calm.context import context_to_string
 
 
 @click.group()
@@ -15,13 +18,42 @@ def cli():
     pass
 
 @cli.command()
-@click.option('-m', '--model', type=str, required=False)
+@click.option('-m', '--model', type=str, required=False, default="mistral-openorca")
 @click.option('-c', '--character', type=str, required=False)
 @click.option('-q', '--quiet', is_flag=True, default=False)
+@click.option('-p', '--path', type=str, required=False, default="")
+@click.option('-h', '--host', type=str, required=False, default="")
+@click.option('-n', '--num', type=int, required=False, default=10)
+@click.option('-l', '--localhost', is_flag=True, default=False)
+@click.option('-k', '--kb', is_flag=True, default=False)
 @click.argument('words', type=str)
-def say(words, model, character, quiet):
+def say(words, model, character, quiet, path, host, num, localhost, kb):
     "Say some words to a model or character"
+    # validate input
+    if localhost is True:
+        host = "localhost:7999"
+    if kb is True and path == "":
+        path = os.path.expanduser("~/.local/share/calm")
+
+    if host == "":
+        host = None
+        port = None
+    else:
+        host_split = host.split(":")
+        if len(host_split) == 1:
+            port = 7999
+        else:
+            host = host_split[0]
+            port = int(host_split[1])
+
+    if path == "":
+        path = None
+
     calm = Calm()
+
+    if path is not None or host is not None:
+        calm.get_kb(chroma_persist_dir=path, host=host, port=port)
+
     instance = calm.get_instance(model, character, quiet)
     answer = calm.answer(instance, words)
     print(answer)
@@ -57,7 +89,7 @@ def list_models(health, nsfw):
                 print(f"NFSW:    {model_name}")
 
 @cli.command()
-@click.argument('model_name', type=str, default="mistral")
+@click.argument('model_name', type=str, default="mistral-openorca")
 @click.option('--health', is_flag=True, default=False)
 @click.option('--nsfw', is_flag=True, default=False)
 def download(model_name, health, nsfw):
@@ -93,6 +125,75 @@ def chat():
 def update():
     "Pull updated model data"
     print("Not yet implemented")
+
+@cli.command()
+@click.option('-p', '--path', type=str, required=False, default="")
+@click.option('-h', '--host', type=str, required=False, default="")
+@click.option('-m', '--metadata', type=str, required=False, default="")
+@click.option('-l', '--localhost', is_flag=True, default=False)
+@click.argument('content', type=str, required=True)
+def learn(path, host, content, metadata, localhost):
+    "Import content to a knowledgebase"
+
+    # validate input
+    if localhost is True:
+        host = "localhost:7999"
+
+    if host == "":
+        host = None
+        port = None
+    else:
+        host_split = host.split(":")
+        if len(host_split) == 1:
+            port = 7999
+        else:
+            host = host_split[0]
+            port = int(host_split[1])
+
+    if path == "":
+        path = None
+
+    if len(metadata) > 0:
+        metadata = json.loads(metadata)
+    else:
+        metadata = {}
+
+    calm = Calm()
+    calm.get_kb(chroma_persist_dir=path, host=host, port=port)
+    result = calm.add_knowledge(content=content, metadata=metadata)
+    print(f"{result}: ok")
+
+@cli.command()
+@click.option('-p', '--path', type=str, required=False, default="")
+@click.option('-h', '--host', type=str, required=False, default="")
+@click.option('-n', '--num', type=int, required=False, default=10)
+@click.option('-l', '--localhost', is_flag=True, default=False)
+@click.argument('query', type=str, required=True)
+def recall(path, host, query, num, localhost):
+    "Query content from a knowledgebase"
+    calm = Calm()
+
+    # validate input
+    if localhost is True:
+        host = "localhost:7999"
+
+    if host == "":
+        host = None
+        port = None
+    else:
+        host_split = host.split(":")
+        if len(host_split) == 1:
+            port = 7999
+        else:
+            host = host_split[0]
+            port = int(host_split[1])
+
+    if path == "":
+        path = None
+
+    calm.get_kb(chroma_persist_dir=path, host=host, port=port)
+    results = calm.query_knowledge(query=query, top_num=num)
+    print(context_to_string(results))
 
 
 if __name__ == "__main__":

@@ -1,4 +1,5 @@
 import os
+from typing import Dict, List
 
 import uvicorn
 from llama_cpp.server.app import create_app, Settings
@@ -8,11 +9,12 @@ import guidance
 from .utils import get_cores, has_metal
 from .llm import LLM
 from .character import Character
+from .context import ContextStorage, context_to_string
 
 
 class Calm:
     def __init__(self):
-        pass
+        self.kb = None
 
     def answer(self, instance, question):
         # ensure LLM is loaded
@@ -32,17 +34,33 @@ class Calm:
             result = experts(query=question)
             return result
         else:
-            full_prompt = instance.template["no_input"].format(
-                system_prompt=instance.character.system_prompt,
-                prompt=question,
-                # input=""
-            )
+            if self.kb is None:
+                result = None
+            else:
+                # query knowledgebase
+                result = self.kb.query(query=question, top_num=20)
+                if len(result) > 0:
+                    result = context_to_string(result)
+                else:
+                    result = None
+
+            if result is None or len(result) == 0:
+                full_prompt = instance.template["no_input"].format(
+                    system_prompt=instance.character.system_prompt,
+                    prompt=question
+                )
+            else:
+                full_prompt = instance.template["default"].format(
+                    system_prompt=f"{instance.character.system_prompt}\nAdditional context is provided as input for the following prompt.",
+                    prompt=question,
+                    input=result
+                )
 
             result_raw = instance.llm(
                 prompt=full_prompt,
                 stop=[instance.template["stop"]],
                 echo=False,
-                max_tokens=-1,
+                max_tokens=4096,
                 temperature=0.05
             )
             return str(result_raw['choices'][0]['text'].strip())
@@ -98,3 +116,16 @@ class Calm:
             print(f"Loaded {instance}, {instance.character}")
         
         return instance
+
+    def get_kb(self, chroma_persist_dir=None, host=None, port=7999):
+        if self.kb is None:
+            self.kb = ContextStorage(chroma_persist_dir=chroma_persist_dir, host=host, port=port)
+        return self.kb
+
+    def add_knowledge(self, content: str, metadata: Dict={}, chroma_persist_dir=None):
+        kb = self.get_kb(chroma_persist_dir=chroma_persist_dir)
+        return kb.add(content=content, metadata=metadata)
+
+    def query_knowledge(self, query, top_num=10, chroma_persist_dir=None):
+        kb = self.get_kb(chroma_persist_dir=chroma_persist_dir)
+        return kb.query(query=query, top_num=top_num)

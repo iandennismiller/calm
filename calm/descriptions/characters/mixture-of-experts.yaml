@@ -24,4 +24,4 @@ system_prompt: |
   {{~/assistant}}
 temperature: 0.05
 guidance: true
-model: mistral
+model: mistral-openorca

@@ -18,16 +18,17 @@ setup(
     install_requires=[
         "python-dotenv",
         "click",
+        "pyyaml",
         "rich",
-        "llama-cpp-python[server]",
-        "chromadb",
         "psutil",
         "requests",
-        "llama-cpp-guidance",
-        "guidance",
         "redis",
         "redis-om",
-        "pyyaml",
+        "guidance",
+        "chromadb",
+        "llama-cpp-python[server]",
+        "llama-cpp-guidance",
+        "sentence_transformers",
     ],
     extras_require={
         "dev": [
