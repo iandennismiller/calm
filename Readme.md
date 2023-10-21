@@ -11,28 +11,18 @@ Windows and Linux should generally work without GPU acceleration.
 
 ## Quick Start
 
-0. (optional) create a python virtual environment; see note below
-1. install the python package
-2. download a language model
-3. ask a question
-4. add to a knowledgebase
-5. ask a question; augment from knowledgebase
-
 ### Installation
 
 ```bash
 pip install "git+https://github.com/iandennismiller/calm"
 ```
 
-#### Optional: Python virtual environment
-
-```bash
-mkdir -p ~/.local/share/calm
-python3 -m venv ~/.local/share/calm/venv
-source ~/.local/share/calm/venv/bin/activate
-```
-
 ### Usage
+
+1. download a language model
+2. ask a question
+3. add to knowledge
+4. ask a question using knowledge
 
 ```bash
 calm download
