@@ -11,6 +11,8 @@ Windows and Linux should generally work without GPU acceleration.
 
 ## Quick Start
 
+Quickly install `calm`, download a language model, and start talking to it.
+
 ### Installation
 
 ```bash
