@@ -18,8 +18,15 @@ Windows and Linux should generally work without GPU acceleration.
 4. add to a knowledgebase
 5. ask a question; augment from knowledgebase
 
+### Installation
+
 ```bash
 pip install "git+https://github.com/iandennismiller/calm"
+```
+
+### Usage
+
+```bash
 calm download
 calm say "What is the meaning of life?"
 calm learn "My name is Gilgamesh."
