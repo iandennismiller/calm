@@ -24,12 +24,12 @@ calm learn "My name is Gilgamesh."
 calm say --kb "What is my name?"
 ```
 
-### Optional: create a python virtual environment first
+### Optional: python virtual environment
 
 ```bash
-mkdir -p ~/.ai
-python3 -m venv ~/.ai/venv
-source ~/.ai/venv/bin/activate
+mkdir -p ~/.local/share/calm
+python3 -m venv ~/.local/share/calm/venv
+source ~/.local/share/calm/venv/bin/activate
 ```
 
 ## Usage
