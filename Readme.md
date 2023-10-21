@@ -6,7 +6,7 @@ Calm automatically uses the right template for each model, supports multiple pro
 
 Calm also provides advanced LLM features like Retrieval-Augmented Generation (RAG) with [chromadb](https://github.com/chroma-core/chroma), multi-turn prompting with [Guidance](https://github.com/guidance-ai/guidance), and an OpenAI-compatible API to support external clients.
 
-Calm is accelerated on Apple Silicon out of the box thanks to [llama.cpp]https://github.com/ggerganov/llama.cpp/().
+Calm is accelerated on Apple Silicon out of the box thanks to [llama.cpp](https://github.com/ggerganov/llama.cpp/).
 Windows and Linux should generally work without GPU acceleration.
 
 ## Quick Start
