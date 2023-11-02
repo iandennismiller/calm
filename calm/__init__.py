@@ -99,10 +99,6 @@ class Calm:
             if model is None:
                 model = loaded_character.model
         
-        # if the model is still none, default to Mistral
-        if model is None:
-            model = "mistral"
-
         instance = LLM.from_config(name=model)
 
         if loaded_character:
