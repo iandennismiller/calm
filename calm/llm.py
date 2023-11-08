@@ -57,12 +57,18 @@ class LLM:
         model_filename = self.get_model_filename()
         model_path = self.get_model_dir()
 
-        model_matches = glob(f"{model_path}/*{self.quant}*") + \
-            glob(f"{model_path}/*{self.quant.lower()}*") + \
-                glob(f"{model_path}/*{self.quant.upper()}*")
-
-        if len(model_matches) > 0:
+        model_matches = glob(f"{model_path}/*.gguf")
+        if len(model_matches) == 1:
             return model_matches[0]
+        else:
+            model_matches = glob(f"{model_path}/*{self.quant.lower()}*") + \
+                glob(f"{model_path}/*{self.quant.upper()}*")
+            if len(model_matches) > 0:
+                return model_matches[0]
+            else:
+                model_matches = glob(f"{model_path}/*.gguf")
+                if len(model_matches) > 1:
+                    return model_matches[-1]
 
     def download(self):        
         # if model file exists, return

@@ -1,88 +1,64 @@
 name: Book Writer
 system_prompt: |
+  {{#block hidden=True}}
   {{#system~}}
-  You are a book writing AI. Your prose are well-regarded for their descriptions and wit.
+  You are a book writing AI. As part of your job, you frequently create book proposals. You are able to draft a table of contents and list of characters based on a prompt. Based on these notes, you are able to write the book itself. You include intense visual detail in your writing. You often write lengthy paragraphs.
   {{~/system}}
 
   {{#user~}}
   I want a book proposal for the following prompt:
+
   {{query}}
-  Create a title and a table of contents consisting of 4 chapters. Give each chapter a title and subtitle.
+
+  Create a title and a table of contents consisting of 3 chapters. Give each chapter a title and a one-sentence technical summary of the major plot points - as designed for a copy-editor, not a consumer.
   {{~/user}}
 
   {{#assistant~}}
   Table of Contents
 
-  Chapter 1: {{gen 'table_of_contents' temperature=0.75 max_tokens=768}}
-  {{~/assistant}}
-
-  {{#block hidden=True}}
-  {{#user~}}
-  Create a numbered list of the characters in the story and, for each character, briefly provide their first name and last name, personality, and their physical appearance.
-  {{~/user}}
-
-  {{#assistant~}}
-  {{gen 'characters' temperature=0.35 max_tokens=1024}}
+  {{gen 'table_of_contents' temperature=0.75 max_tokens=768}}
   {{~/assistant}}
   {{/block}}
+  Table of Contents
 
+  {{table_of_contents}}
+
+  {{#block hidden=True}}
+  {{#system~}}
+  You are a book writing AI. As part of your job, you frequently create book proposals. You are able to draft a table of contents and list of characters based on a prompt. Based on these notes, you are able to write the book itself. You include intense visual detail in your writing. You often write lengthy paragraphs.
+  {{~/system}}
+  {{#user~}}
+  Based on the table of contents, create a succinct numbered list of the most prominent characters in the story and, for each character, briefly provide their first name and last name, personality, and their physical appearance.
+  {{~/user}}
+  {{#assistant~}}
+  {{gen 'characters' temperature=0.35 max_tokens=768}}
+  {{~/assistant}}
+  {{/block}}
   Cast of Characters
   
   {{characters}}
 
-  {{#each range(1, 5)}}
+  {{#each range(1, 4)}}
   {{#block hidden=True}}
+  {{#system~}}
+  You are a book writing AI. As part of your job, you frequently create book proposals. You are able to draft a table of contents and list of characters based on a prompt. Based on these notes, you are able to write the book itself. You include intense visual detail in your writing. You often write lengthy paragraphs.
+  {{~/system}}
   {{#user~}}
-  As a reminder, this is the table of contents:
-  
-  {{table_of_contents}}
-
-  In a single sentence, factually summarize the plot arc of Chapter {{this}}. Explain all secrets and plot points; do not build suspense.
-  {{~/user}}
-
-  {{#assistant~}}
-  {{gen 'chapter_summary' temperature=0.75 max_tokens=128 list_append=True}}
-  {{~/assistant}}
-  {{/block}}
-  {{/each}}
-
-  Chapter-by-chapter Summary
-
-  {{#each chapter_summary}}
-  {{this}}
-  {{/each}}
-
-  {{#block hidden=True}}
-  {{#user~}}
-  {{#each chapter_summary}}
-  {{chapter_summary}}
-  {{/each}}
-
-  Based on these chapter descriptions, synthesize the overall plot into a 1-paragraph summary.
-  {{~/user}}
-
-  {{#assistant~}}
-  Summary
-
-  {{gen 'summary' temperature=0.35 max_tokens=512}}
-  {{~/assistant}}
-  {{/block}}
-
-  Plot Summary
-
-  {{summary}}
-
-  {{#each chapter_summary}}
-  {{#block hidden=True}}
-  {{#user~}}
-  Now write Chapter {{@index+1}} by expanding its summary into about 2000 words. Do not describe the chapter; actually write it. Immediately start with the content of the chapter - in all its full, flowery and descriptive prose. Do not repeat the chapter title. Leave 2 lines between paragraphs.
+  Now completely write Chapter {{this}} by expanding it into about 1000 words. Do not describe the chapter for the copy editor; actually write it for the reader.
   {{~/user}}
   {{#assistant~}}
-  Chapter {{@index+1}}.
+  Chapter {{this}}.
 
-  {{gen 'story' temperature=0.75 max_tokens=2048 list_append=True}}
+  {{gen 'story' temperature=0.75 max_tokens=1394 list_append=True}}
+  {{~/assistant}}
+  {{#user~}}
+  Create a one-paragraph technical summary for a copy-editor of the main plot points contained in the most recent chapter.
+  {{~/user}}
+  {{#assistant~}}
+  {{gen 'summary' temperature=0.75 max_tokens=256}}
   {{~/assistant}}
   {{/block}}
+  Summary of Chapter {{this}}: {{summary}}
   {{/each}}
 
   ---BEGIN---
